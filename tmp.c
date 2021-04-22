@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 {
   printf("Hello world\n");
 
-  sleep(3);
+  sleep(4);
 
   printf("Goodbye world\n");
 
