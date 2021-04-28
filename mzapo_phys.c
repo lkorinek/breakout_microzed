@@ -41,12 +41,9 @@ void *map_phys_address(off_t region_base, size_t region_size, int opt_cached)
 
     pagesize = sysconf(_SC_PAGESIZE);
 
-    mem_window_size =
-        ((region_base & (pagesize - 1)) + region_size + pagesize - 1) &
-        ~(pagesize - 1);
+    mem_window_size = ((region_base & (pagesize - 1)) + region_size + pagesize - 1) & ~(pagesize - 1);
 
-    mm = (unsigned char *)mmap(NULL, mem_window_size, PROT_WRITE | PROT_READ,
-                               MAP_SHARED, fd, region_base & ~(pagesize - 1));
+    mm = (unsigned char *)mmap(NULL, mem_window_size, PROT_WRITE | PROT_READ, MAP_SHARED, fd, region_base & ~(pagesize - 1));
     mem = mm + (region_base & (pagesize - 1));
 
     if (mm == MAP_FAILED) {

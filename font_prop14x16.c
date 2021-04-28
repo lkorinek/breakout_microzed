@@ -8761,13 +8761,5 @@ static unsigned char winFreeSystem14x16_width[] = {
 
 /* Exported structure definition. */
 font_descriptor_t font_winFreeSystem14x16 = {
-    "winFreeSystem14x16",
-    14,
-    16,
-    13,
-    32,
-    224,
-    winFreeSystem14x16_bits,
-    0 /*winFreeSystem14x16_offset*/,
-    winFreeSystem14x16_width,
+    "winFreeSystem14x16", 14, 16, 13, 32, 224, winFreeSystem14x16_bits, 0 /*winFreeSystem14x16_offset*/, winFreeSystem14x16_width,
 };

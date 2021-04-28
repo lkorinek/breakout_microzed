@@ -9481,5 +9481,4 @@ static font_bits_t rom8x16_bits[] = {
 };
 
 /* Exported structure definition. */
-font_descriptor_t font_rom8x16 = {"rom8x16",    8, 16, 12, 0, 256,
-                                  rom8x16_bits, 0, 0};
+font_descriptor_t font_rom8x16 = {"rom8x16", 8, 16, 12, 0, 256, rom8x16_bits, 0, 0};

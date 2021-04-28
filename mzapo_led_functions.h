@@ -11,7 +11,7 @@
 #define MZAPO_LED_FUNCTIONS
 
 /*
- * turns on RGB diod
+ * turn on RGB diod
  * color: which color will turn on
  * RGB: which RGB should turn on (there are to -> 1 or 2)
  */

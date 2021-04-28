@@ -15,9 +15,7 @@ void turn_on_RGB(volatile uint32_t color, int RGB)
         exit(1);
     }
 
-    *(volatile uint32_t *)(mem_base + (RGB == 1 ? SPILED_REG_LED_RGB1_o
-                                                : SPILED_REG_LED_RGB2_o)) =
-        color;
+    *(volatile uint32_t *)(mem_base + (RGB == 1 ? SPILED_REG_LED_RGB1_o : SPILED_REG_LED_RGB2_o)) = color;
 }
 
 void turn_off_RGB(int RGB)
@@ -28,7 +26,5 @@ void turn_off_RGB(int RGB)
     if (mem_base == NULL) {
         exit(1);
     }
-    *(volatile uint32_t *)(mem_base + (RGB == 1 ? SPILED_REG_LED_RGB1_o
-                                                : SPILED_REG_LED_RGB2_o)) =
-        0x000000;
+    *(volatile uint32_t *)(mem_base + (RGB == 1 ? SPILED_REG_LED_RGB1_o : SPILED_REG_LED_RGB2_o)) = 0x000000;
 }
