@@ -7,9 +7,7 @@
 
  **/
 
-//mainly for mzapo_led_functions
+// mainly for mzapo_led_functions
 #define RED 0xff0000
 #define GREEN 0x00ff00
 #define BLUE 0x0000ff
-
-

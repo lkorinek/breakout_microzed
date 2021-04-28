@@ -33,9 +33,8 @@ void parlcd_delay(int msec);
 
 void parlcd_hx8357_init(unsigned char *parlcd_mem_base);
 
-
 #ifdef __cplusplus
 } /* extern "C"*/
 #endif
 
-#endif  /*MZAPO_PARLCD_H*/
+#endif /*MZAPO_PARLCD_H*/

@@ -27,4 +27,4 @@ void *map_phys_address(off_t region_base, size_t region_size, int opt_cached);
 } /* extern "C"*/
 #endif
 
-#endif  /*MZAPO_PHYS_H*/
+#endif /*MZAPO_PHYS_H*/
