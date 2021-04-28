@@ -24,6 +24,9 @@
 #include "mzapo_parlcd.h"
 #include "mzapo_phys.h"
 #include "mzapo_regs.h"
+#include "mzapo_consts.h"
+#include "mzapo_led_functions.h"
+
 
 int main(int argc, char *argv[])
 {
