@@ -23,4 +23,11 @@ void turn_on_RGB(volatile uint32_t color, int RGB);
  */
 void turn_off_RGB(int RGB);
 
+/*
+ * turn on/off number of lifes on the led line
+ * lifes: number of lifes you have (1-4)
+ * return : 0 on succes -1 on incorrect
+ */
+int led_line(int lifes);
+
 #endif
