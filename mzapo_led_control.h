@@ -1,5 +1,5 @@
 /**
-  mzapo_led_functions.h      -functions for operations with led and RGB on MZAPO
+  mzapo_led_control.h      -functions for operations with led and RGB on MZAPO
 
   (C) Copyright 2021 by Lukáš Kořínek and Radek Chládek
       e-mail:   korinlu1@fel.cvut.cz chladrad@fel.cvut.cz
