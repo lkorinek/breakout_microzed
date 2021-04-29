@@ -2,20 +2,19 @@ CC = arm-linux-gnueabihf-gcc
 CXX = arm-linux-gnueabihf-g++
 
 CPPFLAGS = -I .
-CFLAGS =-g -std=gnu99 -O1 -Wall
+CFLAGS =-g -std=gnu99 -O1 -Wall -D_DEFAULT_SOURCE
 CXXFLAGS = -g -std=gnu++11 -O1 -Wall
 LDFLAGS = -lrt -lpthread
 #LDLIBS = -lm
 
-SOURCES = breakout.c mzapo_phys.c mzapo_parlcd.c mzapo_led_functions.c
+SOURCES = breakout.c mzapo_phys.c mzapo_parlcd.c mzapo_led_control.c mzapo_lcd_control.c mzapo_terminal.c
 #SOURCES += font_prop14x16.c font_rom8x16.c
 TARGET_EXE = breakout
-#TARGET_IP ?= 192.168.202.127
+TARGET_IP ?= 192.168.202.xxx
 ifeq ($(TARGET_IP),)
 ifneq ($(filter debug run,$(MAKECMDGOALS)),)
 $(warning The target IP address is not set)
 $(warning Run as "TARGET_IP=192.168.202.xxx make run" or modify Makefile)
-TARGET_IP ?= 192.168.202.xxx
 endif
 endif
 TARGET_DIR ?= /tmp/$(shell whoami)
@@ -24,7 +23,7 @@ TARGET_USER ?= root
 #SSH_OPTIONS=-o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o "Port=2222"
 #SSH_GDB_TUNNEL_REQUIRED=y
 #SSH_OPTIONS=-i /opt/zynq/ssh-connect/mzapo-root-key
-#SSH_OPTIONS=-o 'ProxyJump=ctu_login@postel.felk.cvut.cz'
+# SSH_OPTIONS=-i ~/.ssh/mzapo-root-key -o 'ProxyJump=cvut_login@postel.felk.cvut.cz'
 
 OBJECTS += $(filter %.o,$(SOURCES:%.c=%.o))
 OBJECTS += $(filter %.o,$(SOURCES:%.cpp=%.o))
