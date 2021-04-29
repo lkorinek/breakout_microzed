@@ -10,6 +10,7 @@
 #ifndef MZAPO_LED_CONTROL
 #define MZAPO_LED_CONTROL
 
+#define SPILED_MEM_BASE map_phys_address(SPILED_REG_BASE_PHYS, SPILED_REG_SIZE, 0)
 /*
  * turn on RGB diod
  * color: which color will turn on
