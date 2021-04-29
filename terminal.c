@@ -32,10 +32,10 @@ char get_terminal_input(void)
     if (r > 0) {
         switch (c) {
         case 'w':
-            y_move = 10;
+            y_move = -10;
             break;
         case 's':
-            y_move = -10;
+            y_move = 10;
             break;
         case 'a':
             x_move = -10;
