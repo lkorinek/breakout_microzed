@@ -7,8 +7,8 @@
 
  **/
 
-#ifndef MZAPO_LED_FUNCTIONS
-#define MZAPO_LED_FUNCTIONS
+#ifndef MZAPO_LED_CONTROL
+#define MZAPO_LED_CONTROL
 
 /*
  * turn on RGB diod

@@ -11,7 +11,7 @@
 void turn_on_RGB(volatile uint32_t color, int RGB)
 {
     unsigned char *mem_base;
-    mem_base = map_phys_address(SPILED_REG_BASE_PHYS, SPILED_REG_SIZE, 0);
+    mem_base = SPILED_MEM_BASE;
     // if mapping fails exit with error code
     if (mem_base == NULL) {
         exit(1);
@@ -23,7 +23,7 @@ void turn_on_RGB(volatile uint32_t color, int RGB)
 void turn_off_RGB(int RGB)
 {
     unsigned char *mem_base;
-    mem_base = map_phys_address(SPILED_REG_BASE_PHYS, SPILED_REG_SIZE, 0);
+    mem_base = SPILED_MEM_BASE;
     // if mapping fails exit with error code
     if (mem_base == NULL) {
         exit(1);
@@ -35,7 +35,7 @@ bool control_led_line(int lifes)
 {
     bool ret = true;
     unsigned char *mem_base;
-    mem_base = map_phys_address(SPILED_REG_BASE_PHYS, SPILED_REG_SIZE, 0);
+    mem_base = SPILED_MEM_BASE;
 
     // if mapping fails exit with error code
     if (mem_base == NULL) {

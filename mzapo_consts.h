@@ -11,3 +11,4 @@
 #define RED 0xff0000
 #define GREEN 0x00ff00
 #define BLUE 0x0000ff
+#define SPILED_MEM_BASE map_phys_address(SPILED_REG_BASE_PHYS, SPILED_REG_SIZE, 0)
