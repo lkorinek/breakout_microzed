@@ -30,6 +30,7 @@
 #include "mzapo_regs.h"
 #include "player.h"
 #include "terminal.h"
+#include "ball.h"
 
 int main(int argc, char *argv[])
 {
