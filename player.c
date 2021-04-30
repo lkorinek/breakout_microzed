@@ -1,6 +1,7 @@
 #include "mzapo_lcd_control.h"
 
 #include "player.h"
+#include "mzapo_consts.h"
 
 static player player_1 = {.x = LCD_WIDTH / 2 - 50, .y = LCD_HEIGHT - 40, .height = 16, .width = 100, .lives = 4};
 

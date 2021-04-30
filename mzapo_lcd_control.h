@@ -11,8 +11,7 @@
 #define MZAPO_LCD_CONTROL
 
 #define PARLCD_MEM_BASE map_phys_address(PARLCD_REG_BASE_PHYS, PARLCD_REG_SIZE, 0)
-#define LCD_WIDTH 480
-#define LCD_HEIGHT 320
+
 
 void init_parlcd(void);
 

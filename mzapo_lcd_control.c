@@ -5,6 +5,7 @@
 #include "mzapo_regs.h"
 
 #include "mzapo_lcd_control.h"
+#include "mzapo_consts.h"
 
 static unsigned short *display_data;
 
