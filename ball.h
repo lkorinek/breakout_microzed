@@ -17,7 +17,7 @@
  * width: width of the ball
  * increment_x, increment_y = how fast the ball is moving
  * lifes: lifes of our player
-*/
+ */
 typedef struct {
     int x;
     int y;
@@ -31,24 +31,23 @@ typedef struct {
 /*
  * this function moves ball around
  * input: none
- * return: number of lifes of the ball 
-*/
+ * return: number of lifes of the ball
+ */
 int move_ball();
 
 /*
  * function for drawing the ball
  * input: none
  * output: none
- * 
-*/
+ *
+ */
 void draw_ball();
 
 /*
  * function for deleting the ball
  * input: none
  * output: none
-*/
+ */
 void delete_ball();
 
 #endif
-
