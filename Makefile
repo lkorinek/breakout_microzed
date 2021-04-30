@@ -4,10 +4,10 @@ CXX = arm-linux-gnueabihf-g++
 CPPFLAGS = -I .
 CFLAGS =-g -std=gnu99 -O1 -Wall -D_DEFAULT_SOURCE
 CXXFLAGS = -g -std=gnu++11 -O1 -Wall
-LDFLAGS = -lrt -lpthread
+LDFLAGS = -lrt -pthread
 #LDLIBS = -lm
 
-SOURCES = breakout.c mzapo_phys.c mzapo_parlcd.c mzapo_led_control.c mzapo_lcd_control.c terminal.c player.c
+SOURCES = breakout.c mzapo_phys.c mzapo_parlcd.c mzapo_led_control.c mzapo_lcd_control.c terminal.c player.c threads.c
 #SOURCES += font_prop14x16.c font_rom8x16.c
 TARGET_EXE = breakout
 TARGET_IP ?= 192.168.202.xxx

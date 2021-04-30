@@ -12,6 +12,7 @@
 
 #define _POSIX_C_SOURCE 200112L
 
+#include <pthread.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -20,6 +21,7 @@
 #include <time.h>
 #include <unistd.h>
 
+#include "threads.h"
 #include "mzapo_consts.h"
 #include "mzapo_lcd_control.h"
 #include "mzapo_led_control.h"
@@ -36,36 +38,19 @@ int main(int argc, char *argv[])
 
     printf("Hello World!\n");
 
-    // Initialize LCD display
-    init_parlcd();
-    draw_black_screen();
+    shared_data data = init_shared_data();
+    extern pthread_mutex_t mtx;
+    pthread_mutex_init(&mtx, NULL);
 
-    struct timespec loop_delay;
-    loop_delay.tv_sec = 0;
-    loop_delay.tv_nsec = 150 * 1000 * 1000;
+    pthread_t thrs[THREAD_COUNT];
+    pthread_create(&thrs[0], NULL, input_thread, &data);
+    pthread_create(&thrs[1], NULL, output_thread, &data);
+    pthread_create(&thrs[2], NULL, display_thread, &data);
+    pthread_create(&thrs[3], NULL, compute_thread, &data);
 
-    bool run = true;
-    while (run) {
-        set_display_data_color(0u);
-        draw_player();
-
-        char c = get_terminal_input();
-        if (c == 'q') {
-            run = false;
-        }
-
-        // TODO: send message
-        printf("\rPressed button: %c", c);
-        fflush(stdout);
-
-        // Draw new data onto display
-        draw_display_data();
-
-        clock_nanosleep(CLOCK_MONOTONIC, 0, &loop_delay, NULL);
+    for (int i = 0; i < THREAD_COUNT; ++i) {
+        pthread_join(thrs[i], NULL);
     }
-
-    // Make screen black at the end
-    draw_black_screen();
 
     // Reset terminal settings
     set_terminal_raw(false);
@@ -74,3 +59,4 @@ int main(int argc, char *argv[])
 
     return 0;
 }
+
