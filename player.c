@@ -64,3 +64,7 @@ void move_player(int x_move)
 int get_players_lives() { return player_1.lives; }
 
 void decrement_players_lives() { player_1.lives--; }
+
+player get_player_stats() {
+    return player_1;
+}

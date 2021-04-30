@@ -2,9 +2,10 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-#include "terminal.h"
 #include "player.h"
+#include "ball.h"
 #include "mzapo_lcd_control.h"
+#include "terminal.h"
 #include "threads.h"
 
 pthread_mutex_t mtx;
@@ -74,6 +75,7 @@ void *display_thread(void *v)
 
     while (run) {
         draw_player();
+        move_ball();
 
         // Draw new data onto display
         draw_display_data();
@@ -94,12 +96,11 @@ void *compute_thread(void *v)
     bool run = true;
 
     while (run) {
+
         pthread_mutex_lock(&mtx);
         run = data->run;
         pthread_mutex_unlock(&mtx);
     }
 
-    // Make screen black at the end
-    draw_black_screen();
     return 0;
 }

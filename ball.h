@@ -42,6 +42,8 @@ void move_ball();
  */
 void draw_ball();
 
+void bounce_ball();
+
 /*
  * function for deleting the ball
  * input: none

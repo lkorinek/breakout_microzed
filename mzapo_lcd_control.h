@@ -10,6 +10,8 @@
 #ifndef MZAPO_LCD_CONTROL
 #define MZAPO_LCD_CONTROL
 
+#include <stdint.h>
+
 #define PARLCD_MEM_BASE map_phys_address(PARLCD_REG_BASE_PHYS, PARLCD_REG_SIZE, 0)
 
 

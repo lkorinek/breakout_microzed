@@ -3,26 +3,28 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-#include "ball.h"
 #include "mzapo_consts.h"
 #include "mzapo_lcd_control.h"
 #include "mzapo_led_control.h"
+
+#include "ball.h"
 #include "player.h"
 
+const int speed = 8;
+
 static ball ball_1 = {
-    .x = LCD_WIDTH / 2, .y = LCD_HEIGHT - 15, .height = 10, .width = 10, .increment_x = 10, .increment_y = -10};
+    .x = LCD_WIDTH / 2, .y = LCD_HEIGHT / 2, .height = 10, .width = 10, .increment_x = speed, .increment_y = -speed};
 
 void reset_ball()
 {
     ball_1.x = LCD_WIDTH / 2;
-    ball_1.y = LCD_HEIGHT - 15;
-    ball_1.increment_x = 10;
-    ball_1.increment_y = -10;
+    ball_1.y = LCD_HEIGHT / 2;
+    ball_1.increment_x = speed;
+    ball_1.increment_y = -speed;
 }
 
 void move_ball()
 {
-    draw_ball();
     delete_ball();
 
     if (ball_1.x >= LCD_WIDTH - ball_1.width || ball_1.x <= ball_1.width) {
@@ -36,8 +38,21 @@ void move_ball()
             reset_ball();
         }
     }
+    bounce_ball();
+
     ball_1.x += ball_1.increment_x;
     ball_1.y += ball_1.increment_y;
+
+    draw_ball();
+}
+
+void bounce_ball()
+{
+    player p_1 = get_player_stats();
+
+    if ((ball_1.x + ball_1.width) > p_1.x && (p_1.x + p_1.width) > ball_1.x && (ball_1.y + ball_1.height) > p_1.y) {
+        ball_1.increment_y = -ball_1.increment_y;
+    }
 }
 
 void draw_ball()
@@ -47,7 +62,6 @@ void draw_ball()
             set_display_data_pixel(ball_1.x + i, ball_1.y + j, 0xfff);
         }
     }
-    draw_display_data();
 }
 
 void delete_ball()
@@ -57,5 +71,4 @@ void delete_ball()
             set_display_data_pixel(ball_1.x + i, ball_1.y + j, 0u);
         }
     }
-    draw_display_data();
 }

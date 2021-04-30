@@ -33,4 +33,6 @@ int get_players_lives();
 
 void decrement_players_lives();
 
+player get_player_stats();
+
 #endif
