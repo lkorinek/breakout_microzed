@@ -27,30 +27,22 @@ char get_terminal_input(void)
 {
     char c;
     int r = read(0, &c, 1);
-    int x_move = 0;
-    int y_move = 0;
+
     if (r > 0) {
         switch (c) {
-        case 'w':
-            y_move = -10;
-            break;
-        case 's':
-            y_move = 10;
-            break;
         case 'a':
-            x_move = -10;
+            set_player_speed(-8);
             break;
         case 'd':
-            x_move = 10;
+            set_player_speed(8);
+            break;
+        case 's':
+            set_player_speed(0);
             break;
         default:
             break;
         }
     }
-    if (x_move) {
-        move_player_x(x_move);
-    } else if (y_move) {
-        move_player_y(y_move);
-    }
+
     return c;
 }

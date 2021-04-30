@@ -13,6 +13,7 @@
 typedef struct {
     int x;
     int y;
+    int speed;
     int height;
     int width;
     int lives;
@@ -21,6 +22,10 @@ typedef struct {
 void draw_player();
 
 void remove_player();
+
+void set_player_speed(int speed);
+
+void decrement_player_speed();
 
 void move_player_x(int x_move);
 
