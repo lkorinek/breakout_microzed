@@ -27,6 +27,6 @@ void set_player_speed(int speed);
 
 void decrement_player_speed();
 
-void move_player_x(int x_move);
+void move_player(int x_move);
 
 #endif

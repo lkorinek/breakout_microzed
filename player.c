@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #include "mzapo_lcd_control.h"
 
 #include "mzapo_consts.h"
@@ -9,7 +11,7 @@ void draw_player()
 {
     remove_player();
     if (player_1.speed != 0) {
-        move_player_x(player_1.speed);
+        move_player(player_1.speed);
     }
 
     for (int i = 0; i < player_1.width; ++i) {
@@ -41,7 +43,14 @@ void decrement_player_speed()
 
 void move_player(int x_move)
 {
-    if (player_1.x + player_1.width < LCD_WIDTH && player_1.x > 0) {
+    bool move = true;
+    if (player_1.x + player_1.width > LCD_WIDTH && x_move > 0) {
+        move = false;
+    } else if (player_1.x < 0 && x_move < 0) {
+        move = false;
+    }
+
+    if (move) {
         remove_player();
         for (int i = 0; i < player_1.width; ++i) {
             for (int j = 0; j < player_1.height; ++j) {
