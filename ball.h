@@ -50,4 +50,10 @@ void draw_ball();
  */
 void delete_ball();
 
+/*
+ * resets ball to start position
+ * input: none
+ * output: none
+*/
+void reset_ball();
 #endif
