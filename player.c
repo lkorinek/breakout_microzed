@@ -60,3 +60,7 @@ void move_player(int x_move)
         player_1.x += x_move;
     }
 }
+
+int get_players_lives() { return player_1.lives; }
+
+void decrement_players_lives() { player_1.lives--; }

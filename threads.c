@@ -50,7 +50,7 @@ void *output_thread(void *v)
         pthread_mutex_unlock(&mtx);
 
         // TODO: send message
-        printf("\rPressed button: %c", c);
+        printf("\rPressed button: %c Lives: %d", c, get_players_lives());
         fflush(stdout);
 
         pthread_mutex_lock(&mtx);

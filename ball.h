@@ -7,8 +7,8 @@
 
  **/
 
-#ifndef PLAYER
-#define PLAYER
+#ifndef BALL
+#define BALL
 
 /*
  * struct for our ball
@@ -25,7 +25,6 @@ typedef struct {
     int width;
     int increment_x;
     int increment_y;
-    int lifes;
 } ball;
 
 /*
@@ -33,7 +32,7 @@ typedef struct {
  * input: none
  * return: number of lifes of the ball
  */
-int move_ball();
+void move_ball();
 
 /*
  * function for drawing the ball

@@ -29,4 +29,8 @@ void decrement_player_speed();
 
 void move_player(int x_move);
 
+int get_players_lives();
+
+void decrement_players_lives();
+
 #endif

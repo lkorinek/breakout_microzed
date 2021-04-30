@@ -1,6 +1,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 
 #include "ball.h"
 #include "mzapo_consts.h"
@@ -9,7 +10,7 @@
 #include "player.h"
 
 static ball ball_1 = {
-    .x = LCD_WIDTH / 2, .y = LCD_HEIGHT - 15, .height = 10, .width = 10, .increment_x = 10, .increment_y = -10, .lifes = 4};
+    .x = LCD_WIDTH / 2, .y = LCD_HEIGHT - 15, .height = 10, .width = 10, .increment_x = 10, .increment_y = -10};
 
 void reset_ball()
 {
@@ -19,7 +20,7 @@ void reset_ball()
     ball_1.increment_y = -10;
 }
 
-int move_ball()
+void move_ball()
 {
     draw_ball();
     delete_ball();
@@ -30,16 +31,13 @@ int move_ball()
     if (ball_1.y <= ball_1.height || ball_1.y >= LCD_HEIGHT - ball_1.height) {
         ball_1.increment_y = -ball_1.increment_y;
         if (ball_1.y >= LCD_HEIGHT - ball_1.height) {
-            ball_1.lifes--;
-            control_led_line(ball_1.lifes);
-            printf("LIFE DOWN\n");
+            decrement_players_lives();
+            control_led_line(get_players_lives());
             reset_ball();
         }
     }
     ball_1.x += ball_1.increment_x;
     ball_1.y += ball_1.increment_y;
-
-    return ball_1.lifes;
 }
 
 void draw_ball()
