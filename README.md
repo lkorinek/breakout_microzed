@@ -9,6 +9,19 @@ control prints:
 # Atari breakout
 Classical retro game atari breakout implemented on the MicroZed APO. This project is realized as a semestral project for the course "Computer Architecture". 
 May it get as many points as possible and possibly some joy for others :-). 
+##### TODO LIST:
+1. player
+    1. fix player movement
+    2. create macro definitions (maybe settings.c?)
+    3. free display data
+2. Ball
+3. Score
+4. Menu
+5. Lives LED
+6. game LED
+7. Two Players
+8. Game over screen
+***************
 #### Used functions and files:
 Here is the list of files and functions within these files we implemented and used.
 ***
