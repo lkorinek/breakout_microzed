@@ -29,6 +29,6 @@ void turn_off_RGB(int RGB);
  * lifes: number of lifes you have (1-4)
  * return : true on succes false on error (mainly caused by incorrect input)
  */
-bool led_line(int lifes);
+bool control_led_line(int lifes);
 
 #endif
