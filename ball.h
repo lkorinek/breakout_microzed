@@ -32,7 +32,7 @@ typedef struct {
  * input: none
  * return: number of lifes of the ball
  */
-void move_ball();
+void move_ball(unsigned char *parlcd_mem_base);
 
 /*
  * function for drawing the ball
@@ -40,7 +40,7 @@ void move_ball();
  * output: none
  *
  */
-void draw_ball();
+void draw_ball(unsigned char *parlcd_mem_base);
 
 void bounce_ball();
 
@@ -49,7 +49,7 @@ void bounce_ball();
  * input: none
  * output: none
  */
-void delete_ball();
+void delete_ball(unsigned char *parlcd_mem_base);
 
 /*
  * resets ball to start position

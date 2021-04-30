@@ -19,15 +19,15 @@ typedef struct {
     int lives;
 } player;
 
-void draw_player();
+void draw_player(unsigned char *parlcd_mem_base);
 
-void remove_player();
+void remove_player(unsigned char *parlcd_mem_base);
 
 void set_player_speed(int speed);
 
 void decrement_player_speed();
 
-void move_player(int x_move);
+void move_player(unsigned char *parlcd_mem_base, int x_move);
 
 int get_players_lives();
 

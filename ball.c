@@ -23,9 +23,9 @@ void reset_ball()
     ball_1.increment_y = -speed;
 }
 
-void move_ball()
+void move_ball(unsigned char *parlcd_mem_base)
 {
-    delete_ball();
+    delete_ball(parlcd_mem_base);
 
     if (ball_1.x >= LCD_WIDTH - ball_1.width || ball_1.x <= ball_1.width) {
         ball_1.increment_x = -ball_1.increment_x;
@@ -38,12 +38,13 @@ void move_ball()
             reset_ball();
         }
     }
+
     bounce_ball();
 
     ball_1.x += ball_1.increment_x;
     ball_1.y += ball_1.increment_y;
 
-    draw_ball();
+    draw_ball(parlcd_mem_base);
 }
 
 void bounce_ball()
@@ -55,20 +56,20 @@ void bounce_ball()
     }
 }
 
-void draw_ball()
+void draw_ball(unsigned char *parlcd_mem_base)
 {
     for (int i = 0; i < ball_1.width; ++i) {
         for (int j = 0; j < ball_1.height; ++j) {
-            set_display_data_pixel(ball_1.x + i, ball_1.y + j, 0xfff);
+            set_display_data_pixel(parlcd_mem_base, ball_1.x + i, ball_1.y + j, 0xfff);
         }
     }
 }
 
-void delete_ball()
+void delete_ball(unsigned char *parlcd_mem_base)
 {
     for (int i = 0; i < ball_1.width; ++i) {
         for (int j = 0; j < ball_1.height; ++j) {
-            set_display_data_pixel(ball_1.x + i, ball_1.y + j, 0u);
+            set_display_data_pixel(parlcd_mem_base, ball_1.x + i, ball_1.y + j, 0u);
         }
     }
 }

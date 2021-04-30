@@ -2,6 +2,8 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+#include "mzapo_phys.h"
+#include "mzapo_regs.h"
 #include "player.h"
 #include "ball.h"
 #include "mzapo_lcd_control.h"
@@ -60,7 +62,6 @@ void *output_thread(void *v)
     }
 
     // Make screen black at the end
-    draw_black_screen();
     return 0;
 }
 
@@ -70,15 +71,16 @@ void *display_thread(void *v)
     bool run = true;
 
     // Initialize LCD display
-    init_parlcd();
-    draw_black_screen();
+    unsigned char *parlcd_mem_base = map_phys_address(PARLCD_REG_BASE_PHYS, PARLCD_REG_SIZE, 0);
+    init_parlcd(parlcd_mem_base);
+    // draw_black_screen();
 
     while (run) {
-        draw_player();
-        move_ball();
+        draw_player(parlcd_mem_base);
+        move_ball(parlcd_mem_base);
 
         // Draw new data onto display
-        draw_display_data();
+        draw_display_data(parlcd_mem_base);
 
         pthread_mutex_lock(&mtx);
         run = data->run;
@@ -86,7 +88,7 @@ void *display_thread(void *v)
     }
 
     // Make screen black at the end
-    draw_black_screen();
+    draw_black_screen(parlcd_mem_base);
     return 0;
 }
 

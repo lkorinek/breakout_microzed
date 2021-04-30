@@ -7,25 +7,25 @@
 
 static player player_1 = {.x = LCD_WIDTH / 2 - 50, .y = LCD_HEIGHT - 40, .height = 14, .width = 100, .lives = 4};
 
-void draw_player()
+void draw_player(unsigned char *parlcd_mem_base)
 {
-    remove_player();
+    remove_player(parlcd_mem_base);
     if (player_1.speed != 0) {
-        move_player(player_1.speed);
+        move_player(parlcd_mem_base, player_1.speed);
     }
 
     for (int i = 0; i < player_1.width; ++i) {
         for (int j = 0; j < player_1.height; ++j) {
-            set_display_data_pixel(player_1.x + i, player_1.y + j, 0xfff);
+            set_display_data_pixel(parlcd_mem_base, player_1.x + i, player_1.y + j, 0xfff);
         }
     }
 }
 
-void remove_player()
+void remove_player(unsigned char *parlcd_mem_base)
 {
     for (int i = 0; i < player_1.width; ++i) {
         for (int j = 0; j < player_1.height; ++j) {
-            set_display_data_pixel(player_1.x + i, player_1.y + j, 0u);
+            set_display_data_pixel(parlcd_mem_base, player_1.x + i, player_1.y + j, 0u);
         }
     }
 }
@@ -41,7 +41,7 @@ void decrement_player_speed()
     }
 }
 
-void move_player(int x_move)
+void move_player(unsigned char *parlcd_mem_base, int x_move)
 {
     bool move = true;
     if (player_1.x + player_1.width > LCD_WIDTH && x_move > 0) {
@@ -51,10 +51,10 @@ void move_player(int x_move)
     }
 
     if (move) {
-        remove_player();
+        remove_player(parlcd_mem_base);
         for (int i = 0; i < player_1.width; ++i) {
             for (int j = 0; j < player_1.height; ++j) {
-                set_display_data_pixel(player_1.x + i + x_move, player_1.y + j, 0xfff);
+                set_display_data_pixel(parlcd_mem_base, player_1.x + i + x_move, player_1.y + j, 0xfff);
             }
         }
         player_1.x += x_move;

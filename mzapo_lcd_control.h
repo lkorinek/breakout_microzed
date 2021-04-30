@@ -12,17 +12,14 @@
 
 #include <stdint.h>
 
-#define PARLCD_MEM_BASE map_phys_address(PARLCD_REG_BASE_PHYS, PARLCD_REG_SIZE, 0)
+void init_parlcd(unsigned char *parlcd_mem_base);
 
+void draw_black_screen(unsigned char *parlcd_mem_base);
 
-void init_parlcd(void);
+void set_display_data_color(unsigned char *parlcd_mem_base, unsigned short color);
 
-void draw_black_screen(void);
+void set_display_data_pixel(unsigned char *parlcd_mem_base, int x, int y, unsigned short color);
 
-void set_display_data_color(unsigned short color);
-
-void set_display_data_pixel(int x, int y, unsigned short color);
-
-void draw_display_data(void);
+void draw_display_data(unsigned char *parlcd_mem_base);
 
 #endif
