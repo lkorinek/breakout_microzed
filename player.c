@@ -39,24 +39,15 @@ void decrement_player_speed()
     }
 }
 
-void move_player_x(int x_move)
+void move_player(int x_move)
 {
-    remove_player();
-    for (int i = 0; i < player_1.width; ++i) {
-        for (int j = 0; j < player_1.height; ++j) {
-            set_display_data_pixel(player_1.x + i + x_move, player_1.y + j, 0xfff);
+    if (player_1.x + player_1.width < LCD_WIDTH && player_1.x > 0) {
+        remove_player();
+        for (int i = 0; i < player_1.width; ++i) {
+            for (int j = 0; j < player_1.height; ++j) {
+                set_display_data_pixel(player_1.x + i + x_move, player_1.y + j, 0xfff);
+            }
         }
+        player_1.x += x_move;
     }
-    player_1.x += x_move;
-}
-
-void move_player_y(int y_move)
-{
-    remove_player();
-    for (int i = 0; i < player_1.width; ++i) {
-        for (int j = 0; j < player_1.height; ++j) {
-            set_display_data_pixel(player_1.x + i, player_1.y + j + y_move, 0xfff);
-        }
-    }
-    player_1.y += y_move;
 }
