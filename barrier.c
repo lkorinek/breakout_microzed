@@ -14,9 +14,10 @@
 barrier our_barriers[NUMBER_OF_BARRIERS];
 
 unsigned short colors[] = {0xf0f,0xfff,0xf0f,0xfff};
+const int space_for_text = 0;
 void init_barriers()
 {
-    int x = 0, y = 0, shift = 15;
+    int x = 0, y = space_for_text, shift = 15;
     for (int i = 0; i < NUMBER_OF_BARRIERS; ++i) {
         our_barriers[i].x = x;
         our_barriers[i].y = y;
