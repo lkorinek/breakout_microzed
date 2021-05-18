@@ -12,14 +12,31 @@
 
 #include <stdint.h>
 
+/*
+ * Initialise display and allocate memory for grid
+ */
 void init_parlcd(unsigned char *parlcd_mem_base);
 
+/*
+ * Reset grid data
+ */
 void draw_black_screen(unsigned char *parlcd_mem_base);
 
+/*
+ * Set all pixel in grid to certain color
+ */
 void set_display_data_color(unsigned char *parlcd_mem_base, unsigned short color);
 
+/*
+ * Store a pixel to a grid
+ * color: color of the pixel
+ * x and y: position of the pixel
+ */
 void set_display_data_pixel(unsigned char *parlcd_mem_base, int x, int y, unsigned short color);
 
+/*
+ * Draw on display data stored in grid
+ */
 void draw_display_data(unsigned char *parlcd_mem_base);
 
 #endif

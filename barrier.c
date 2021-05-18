@@ -71,7 +71,7 @@ void update_barriers(unsigned char *parlcd_mem_base) {
 
 bool bounce_from_barriers(int x, int y, int ball_w , int ball_h,unsigned char *parlcd_mem_base) {
     bool ret = false;
-    for (int i = NUMBER_OF_BARRIERS; i >=0 ; --i)
+    for (int i = NUMBER_OF_BARRIERS; i >= 0; --i)
     {
         if ((x+ball_w) > (our_barriers[i].x) && (our_barriers[i].x + our_barriers[i].width) > x && (y - ball_h) < (our_barriers[i].y + our_barriers[i].height) && !our_barriers[i].destroyed)
         {

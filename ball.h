@@ -15,8 +15,7 @@
  * x,y coordinates
  * height: height of the ball
  * width: width of the ball
- * increment_x, increment_y = how fast the ball is moving
- * lifes: lifes of our player
+ * increment_x, increment_y = how fast the ball moves
  */
 typedef struct {
     int x;
@@ -29,32 +28,27 @@ typedef struct {
 
 /*
  * this function moves ball around
- * input: none
- * return: number of lifes of the ball
  */
 void move_ball(unsigned char *parlcd_mem_base);
 
 /*
  * function for drawing the ball
- * input: none
- * output: none
- *
  */
 void draw_ball(unsigned char *parlcd_mem_base);
 
+/*
+ * function to bounce ball of the platforms (players)
+ */
 void bounce_ball(unsigned char *parlcd_mem_base);
 
 /*
  * function for deleting the ball
- * input: none
- * output: none
  */
 void delete_ball(unsigned char *parlcd_mem_base);
 
 /*
  * resets ball to start position
- * input: none
- * output: none
-*/
+ */
 void reset_ball();
+
 #endif

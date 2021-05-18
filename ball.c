@@ -1,15 +1,15 @@
 #include <stdbool.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
 
 #include "mzapo_consts.h"
 #include "mzapo_lcd_control.h"
 #include "mzapo_led_control.h"
 
 #include "ball.h"
-#include "player.h"
 #include "barrier.h"
+#include "player.h"
 
 const int speed = 8;
 
@@ -55,8 +55,7 @@ void bounce_ball(unsigned char *parlcd_mem_base)
     if ((ball_1.x + ball_1.width) > p_1.x && (p_1.x + p_1.width) > ball_1.x && (ball_1.y + ball_1.height) > p_1.y) {
         ball_1.increment_y = -ball_1.increment_y;
     }
-    if (bounce_from_barriers(ball_1.x,ball_1.y, ball_1.width,ball_1.height,parlcd_mem_base))
-    {
+    if (bounce_from_barriers(ball_1.x, ball_1.y, ball_1.width, ball_1.height, parlcd_mem_base)) {
         ball_1.increment_y = -ball_1.increment_y;
     }
 }
