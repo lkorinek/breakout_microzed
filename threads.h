@@ -20,9 +20,21 @@ typedef struct {
 } shared_data;
 
 shared_data init_shared_data(void);
+/*
+ * Input thread to recieve input from keyboard.
+ */
 void *input_thread(void *v);
+/*
+ * Output thread to print output to terminal.
+ */
 void *output_thread(void *v);
+/*
+Display thread to display data on screen.
+ */
 void *display_thread(void *v);
+/*
+Compute thread to compute more demanding computations.
+ */
 void *compute_thread(void *v);
 
 #endif

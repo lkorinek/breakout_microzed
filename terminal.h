@@ -10,8 +10,16 @@
 #ifndef TERMINAL
 #define TERMINAL
 
+/*
+ * Set terminal to raw mode.
+ * bool set: true to set raw mode and false to reset terminal setting.
+ */
 void set_terminal_raw(bool set);
 
+/*
+ * Get input from terminal.
+ * return: pressed key
+ */
 char get_terminal_input(void);
 
 #endif
