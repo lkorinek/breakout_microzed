@@ -17,6 +17,7 @@ typedef struct {
     int height;
     int width;
     int lives;
+    int score;
 } player;
 
 void draw_player(unsigned char *parlcd_mem_base);
@@ -32,6 +33,10 @@ void move_player(unsigned char *parlcd_mem_base, int x_move);
 int get_players_lives();
 
 void decrement_players_lives();
+
+void increment_players_score();
+
+int get_players_score();
 
 player get_player_stats();
 

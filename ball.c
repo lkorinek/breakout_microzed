@@ -9,16 +9,17 @@
 
 #include "ball.h"
 #include "player.h"
+#include "barrier.h"
 
 const int speed = 8;
 
 static ball ball_1 = {
-    .x = LCD_WIDTH / 2, .y = LCD_HEIGHT / 2, .height = 10, .width = 10, .increment_x = speed, .increment_y = -speed};
+    .x = LCD_WIDTH / 2 - 50, .y = LCD_HEIGHT - 60, .height = 10, .width = 10, .increment_x = speed, .increment_y = -speed};
 
 void reset_ball()
 {
     ball_1.x = LCD_WIDTH / 2;
-    ball_1.y = LCD_HEIGHT / 2;
+    ball_1.y = LCD_HEIGHT - 60;
     ball_1.increment_x = speed;
     ball_1.increment_y = -speed;
 }
@@ -39,7 +40,7 @@ void move_ball(unsigned char *parlcd_mem_base)
         }
     }
 
-    bounce_ball();
+    bounce_ball(parlcd_mem_base);
 
     ball_1.x += ball_1.increment_x;
     ball_1.y += ball_1.increment_y;
@@ -47,11 +48,15 @@ void move_ball(unsigned char *parlcd_mem_base)
     draw_ball(parlcd_mem_base);
 }
 
-void bounce_ball()
+void bounce_ball(unsigned char *parlcd_mem_base)
 {
     player p_1 = get_player_stats();
 
     if ((ball_1.x + ball_1.width) > p_1.x && (p_1.x + p_1.width) > ball_1.x && (ball_1.y + ball_1.height) > p_1.y) {
+        ball_1.increment_y = -ball_1.increment_y;
+    }
+    if (bounce_from_barriers(ball_1.x,ball_1.y, ball_1.width,ball_1.height,parlcd_mem_base))
+    {
         ball_1.increment_y = -ball_1.increment_y;
     }
 }

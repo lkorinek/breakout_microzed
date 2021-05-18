@@ -2,11 +2,12 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+#include "ball.h"
+#include "barrier.h"
+#include "mzapo_lcd_control.h"
 #include "mzapo_phys.h"
 #include "mzapo_regs.h"
 #include "player.h"
-#include "ball.h"
-#include "mzapo_lcd_control.h"
 #include "terminal.h"
 #include "threads.h"
 
@@ -53,7 +54,7 @@ void *output_thread(void *v)
         pthread_mutex_unlock(&mtx);
 
         // TODO: send message
-        printf("\rPressed button: %c Lives: %d", c, get_players_lives());
+        printf("\rPressed button: %c Lives: %d SCORE: %d", c, get_players_lives(), get_players_score());
         fflush(stdout);
 
         pthread_mutex_lock(&mtx);
@@ -73,7 +74,12 @@ void *display_thread(void *v)
     // Initialize LCD display
     unsigned char *parlcd_mem_base = map_phys_address(PARLCD_REG_BASE_PHYS, PARLCD_REG_SIZE, 0);
     init_parlcd(parlcd_mem_base);
-    draw_black_screen(parlcd_mem_base);
+    // draw_black_screen();
+    init_barriers();
+    draw_barriers(parlcd_mem_base);
+
+    // Draw new data onto display
+    draw_display_data(parlcd_mem_base);
 
     while (run) {
         draw_player(parlcd_mem_base);

@@ -42,7 +42,7 @@ void move_ball(unsigned char *parlcd_mem_base);
  */
 void draw_ball(unsigned char *parlcd_mem_base);
 
-void bounce_ball();
+void bounce_ball(unsigned char *parlcd_mem_base);
 
 /*
  * function for deleting the ball
