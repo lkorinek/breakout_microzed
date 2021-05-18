@@ -39,6 +39,8 @@ int main(int argc, char *argv[])
 
     printf("Hello World!\n");
 
+    control_led_line(4);
+    
     shared_data data = init_shared_data();
     extern pthread_mutex_t mtx;
     pthread_mutex_init(&mtx, NULL);
