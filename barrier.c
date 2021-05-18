@@ -50,6 +50,10 @@ void draw_barriers(unsigned char *parlcd_mem_base)
 void update_barriers(unsigned char *parlcd_mem_base) {
     int color_number = 0;
     for (int b = 0; b < NUMBER_OF_BARRIERS; ++b) {
+        if (b != 0 && b %5 == 0)
+        {
+            ++color_number;
+        }  
         for (int i = 0; i < our_barriers[b].width; ++i) {
             for (int j = 0; j < our_barriers[b].height; ++j) {
                 if (!our_barriers[b].destroyed)
@@ -60,11 +64,7 @@ void update_barriers(unsigned char *parlcd_mem_base) {
                     set_display_data_pixel(parlcd_mem_base, our_barriers[b].x + i, our_barriers[b].y + j, 0u);
                 }
             }
-        }
-        if (b != 0 && b %5 == 0)
-        {
-            ++color_number;
-        }   
+        } 
     }
 }
 
