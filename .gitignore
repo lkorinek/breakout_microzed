@@ -3,3 +3,4 @@ depend
 breakout
 connect.gdb
 .vscode
+Makefile
