@@ -57,6 +57,12 @@ void *output_thread(void *v)
         printf("\rPressed button: %c Lives: %d SCORE: %d", c, get_players_lives(), get_players_score());
         fflush(stdout);
 
+        if (get_players_lives() == 0) {
+            pthread_mutex_lock(&mtx);
+            data->run = false;
+            pthread_mutex_unlock(&mtx);
+        }
+
         pthread_mutex_lock(&mtx);
         run = data->run;
         pthread_mutex_unlock(&mtx);
