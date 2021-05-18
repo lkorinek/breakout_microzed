@@ -19,12 +19,26 @@ typedef struct {
 } barrier;
 
 
+/*
+ * Initializes barriers for the game
+ */
 void init_barriers();
 
+
+/*
+ * Draws barriers to the display
+ */
 void draw_barriers(unsigned char *parlcd_mem_base);
 
+/*
+ * Remove old destroyed barriers 
+ */
 void update_barriers(unsigned char *parlcd_mem_base);
 
+/*
+ * Indicates if the ball should bounce and adds score to the player
+ * return: true on bounce, false otherwise
+ */
 bool bounce_from_barriers(int x, int y, int ball_w , int ball_h,unsigned char *parlcd_mem_base);
 
 #endif
