@@ -58,6 +58,8 @@ void *output_thread(void *v)
         fflush(stdout);
 
         if (get_players_lives() == 0) {
+            // TODO: add some function game_over, which will print on screen GAME OVER
+            fprintf(stderr,"\r\nGAME OVER!");
             pthread_mutex_lock(&mtx);
             data->run = false;
             pthread_mutex_unlock(&mtx);
