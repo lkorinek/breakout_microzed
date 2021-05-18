@@ -73,7 +73,7 @@ void *display_thread(void *v)
     // Initialize LCD display
     unsigned char *parlcd_mem_base = map_phys_address(PARLCD_REG_BASE_PHYS, PARLCD_REG_SIZE, 0);
     init_parlcd(parlcd_mem_base);
-    // draw_black_screen();
+    draw_black_screen(parlcd_mem_base);
 
     while (run) {
         draw_player(parlcd_mem_base);

@@ -7,7 +7,7 @@
 #include "mzapo_consts.h"
 #include "mzapo_lcd_control.h"
 
-static unsigned short *display_data;
+volatile unsigned short *display_data;
 
 void init_parlcd(unsigned char *parlcd_mem_base)
 {
