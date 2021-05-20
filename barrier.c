@@ -15,7 +15,7 @@
 barrier our_barriers[NUMBER_OF_BARRIERS_IN_ROW * NUMBER_OF_ROWS];
 
 
-unsigned short colors[] = {0xf800,0xf7e0,0xf0f,0xffD5, 0xffD5, 0xffD5};
+unsigned short colors[] = {0xf800,0xfD00,0xffe0,0x7e0, 0x3ff, 0xD017};
 const int space_for_text = 60;
 
 void init_barriers()
@@ -61,7 +61,7 @@ bool bounce_from_barriers(int x, int y, int ball_w , int ball_h,unsigned char *p
     bool ret = false;
     for (int i = NUMBER_OF_BARRIERS_IN_ROW * NUMBER_OF_ROWS; i >= 0; --i)
     {
-        if ((x+ball_w) > (our_barriers[i].x) && (our_barriers[i].x + our_barriers[i].width) > x && (y - ball_h) < (our_barriers[i].y + our_barriers[i].height) && !our_barriers[i].destroyed)
+        if ((x+ball_w) > (our_barriers[i].x) && (our_barriers[i].x + our_barriers[i].width) > x &&  (y + ball_h) > our_barriers[i].y && (our_barriers[i].y + our_barriers[i].height) > y && !our_barriers[i].destroyed)
         {
             ret = true;
             our_barriers[i].destroyed = true;

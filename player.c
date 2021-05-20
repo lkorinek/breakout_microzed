@@ -5,7 +5,7 @@
 #include "mzapo_consts.h"
 #include "player.h"
 
-static player player_1 = {.x = LCD_WIDTH / 2 - 50, .y = LCD_HEIGHT - 40, .height = 14, .width = 100, .lives = 4, .score = 0};
+static player player_1 = {.x = LCD_WIDTH / 2 - 50, .y = LCD_HEIGHT - 40, .height = 11, .width = 100, .lives = 4, .score = 0};
 
 void draw_player(unsigned char *parlcd_mem_base)
 {
@@ -16,7 +16,7 @@ void draw_player(unsigned char *parlcd_mem_base)
 
     for (int i = 0; i < player_1.width; ++i) {
         for (int j = 0; j < player_1.height; ++j) {
-            set_display_data_pixel(parlcd_mem_base, player_1.x + i, player_1.y + j, 0xfff);
+            set_display_data_pixel(parlcd_mem_base, player_1.x + i, player_1.y + j, 0xf80b);
         }
     }
 }
@@ -54,7 +54,7 @@ void move_player(unsigned char *parlcd_mem_base, int x_move)
         remove_player(parlcd_mem_base);
         for (int i = 0; i < player_1.width; ++i) {
             for (int j = 0; j < player_1.height; ++j) {
-                set_display_data_pixel(parlcd_mem_base, player_1.x + i + x_move, player_1.y + j, 0xfff);
+                set_display_data_pixel(parlcd_mem_base, player_1.x + i + x_move, player_1.y + j, 0xf80b);
             }
         }
         player_1.x += x_move;
