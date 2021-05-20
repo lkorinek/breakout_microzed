@@ -17,6 +17,8 @@
 typedef struct {
     bool run;
     char last_char;
+    unsigned char *parlcd_mem_base;
+    unsigned char *spiled_mem_base;
 } shared_data;
 
 shared_data init_shared_data(void);

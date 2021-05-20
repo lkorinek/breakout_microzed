@@ -1,6 +1,8 @@
 #include <pthread.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <time.h>
+#include <unistd.h>
 
 #include "ball.h"
 #include "barrier.h"
@@ -10,6 +12,7 @@
 #include "player.h"
 #include "terminal.h"
 #include "threads.h"
+#include "mzapo_knobs_control.h"
 
 pthread_mutex_t mtx;
 
@@ -18,6 +21,8 @@ shared_data init_shared_data(void)
     shared_data ret;
     ret.run = true;
     ret.last_char = '\0';
+    ret.parlcd_mem_base = map_phys_address(PARLCD_REG_BASE_PHYS, PARLCD_REG_SIZE, 0);
+    ret.spiled_mem_base = map_phys_address(SPILED_REG_BASE_PHYS, SPILED_REG_SIZE, 0);
     return ret;
 }
 
@@ -59,7 +64,7 @@ void *output_thread(void *v)
 
         if (get_players_lives() == 0) {
             // TODO: add some function game_over, which will print on screen GAME OVER
-            fprintf(stderr,"\r\nGAME OVER!");
+            fprintf(stderr, "\r\nGAME OVER!");
             pthread_mutex_lock(&mtx);
             data->run = false;
             pthread_mutex_unlock(&mtx);
@@ -80,7 +85,7 @@ void *display_thread(void *v)
     bool run = true;
 
     // Initialize LCD display
-    unsigned char *parlcd_mem_base = map_phys_address(PARLCD_REG_BASE_PHYS, PARLCD_REG_SIZE, 0);
+    unsigned char *parlcd_mem_base = data->parlcd_mem_base;
     init_parlcd(parlcd_mem_base);
     draw_black_screen(parlcd_mem_base);
     init_barriers();
@@ -110,12 +115,18 @@ void *compute_thread(void *v)
 {
     shared_data *data = (shared_data *)v;
     bool run = true;
-
+    init_player_knobs(data->parlcd_mem_base);
+    usleep(2000000);
     while (run) {
+        struct timespec loop_delay = {.tv_sec = 0, .tv_nsec = 5 * 1000 * 1000};
+
+        control_player_knobs(data->spiled_mem_base, data->parlcd_mem_base);
 
         pthread_mutex_lock(&mtx);
         run = data->run;
         pthread_mutex_unlock(&mtx);
+
+        clock_nanosleep(CLOCK_MONOTONIC, 0, &loop_delay, NULL);
     }
 
     return 0;
