@@ -1,5 +1,7 @@
 #include <stdlib.h>
+#include <string.h>
 
+#include "font_types.h"
 #include "mzapo_parlcd.h"
 #include "mzapo_phys.h"
 #include "mzapo_regs.h"
@@ -48,4 +50,50 @@ void draw_display_data(unsigned char *parlcd_mem_base)
     for (int idx = 0; idx < LCD_WIDTH * LCD_HEIGHT; ++idx) {
         parlcd_write_data(parlcd_mem_base, display_data[idx]);
     }
+}
+
+void draw_char(int x, int y, char ch, int scale, font_descriptor_t *fdes)
+{
+    int idx = ch - fdes->firstchar;
+
+    for (int i = 0; i < fdes->height * scale; ++i) {
+        font_bits_t row = fdes->bits[(idx)*fdes->height + i / scale];
+        for (int j = 0; j < fdes->maxwidth * scale; j++) {
+            if (row & (1 << (15 - j / scale))) {
+                display_data[j + x + (i + y) * LCD_WIDTH] = 0xffff;
+            }
+        }
+    }
+}
+
+void draw_text(char *str, int x, int y, int scale, int font)
+{
+    font_descriptor_t *fdes;
+    if (font == 1) {
+        fdes = &font_winFreeSystem14x16;
+    } else {
+        fdes = &font_winFreeSystem14x16;
+    }
+
+    int length = strlen(str);
+    char *curr_point = str;
+    for (int i = 0; i < length; ++i) {
+        draw_char(x, y, *curr_point, scale, fdes);
+        x += char_width(fdes, *curr_point) * scale;
+        ++curr_point;
+    }
+}
+
+int char_width(font_descriptor_t *fdes, int ch)
+{
+    int width = 0;
+    if ((ch >= fdes->firstchar) && (ch - fdes->firstchar < fdes->size)) {
+        ch -= fdes->firstchar;
+        if (!fdes->width) {
+            width = fdes->maxwidth;
+        } else {
+            width = fdes->width[ch];
+        }
+    }
+    return width;
 }

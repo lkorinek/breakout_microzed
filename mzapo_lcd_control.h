@@ -12,6 +12,8 @@
 
 #include <stdint.h>
 
+#include "font_types.h"
+
 /*
  * Initialise display and allocate memory for grid
  */
@@ -38,5 +40,12 @@ void set_display_data_pixel(unsigned char *parlcd_mem_base, int x, int y, unsign
  * Draw on display data stored in grid
  */
 void draw_display_data(unsigned char *parlcd_mem_base);
+
+void draw_char(int x, int y, char ch, int scale, font_descriptor_t *fdes);
+
+void draw_text(char *str, int x, int y, int scale, int font);
+
+
+int char_width(font_descriptor_t *fdes, int ch);
 
 #endif
