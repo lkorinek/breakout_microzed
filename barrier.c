@@ -14,18 +14,16 @@
 
 barrier our_barriers[NUMBER_OF_BARRIERS_IN_ROW * NUMBER_OF_ROWS];
 
-
-unsigned short colors[] = {0xf800,0xfD00,0xffe0,0x7e0, 0x3ff, 0xD017};
-const int space_for_text = 60;
+const unsigned short colors[] = {0xf800, 0xfD00, 0xffe0, 0x7e0, 0x3ff, 0xD017};
 
 void init_barriers()
 {
-    int x = 0, y = space_for_text, shift = 5;
+    int x = 0, y = TOP_SPACE, shift = 5;
     for (int i = 0; i < NUMBER_OF_BARRIERS_IN_ROW * NUMBER_OF_ROWS; ++i) {
         our_barriers[i].x = x;
         our_barriers[i].y = y;
         our_barriers[i].height = 10;
-        our_barriers[i].width = LCD_WIDTH/(NUMBER_OF_BARRIERS_IN_ROW)-shift;
+        our_barriers[i].width = LCD_WIDTH / (NUMBER_OF_BARRIERS_IN_ROW)-shift;
         our_barriers[i].destroyed = false;
         x += our_barriers[i].width + shift;
         if (x >= (LCD_WIDTH - shift)) {
@@ -35,34 +33,31 @@ void init_barriers()
     }
 }
 
-void update_barriers(unsigned char *parlcd_mem_base) {
+void update_barriers(unsigned char *parlcd_mem_base)
+{
     int color_number = 0;
     for (int b = 0; b < NUMBER_OF_BARRIERS_IN_ROW * NUMBER_OF_ROWS; ++b) {
-        if (b != 0 && b % NUMBER_OF_BARRIERS_IN_ROW == 0)
-        {
+        if (b != 0 && b % NUMBER_OF_BARRIERS_IN_ROW == 0) {
             ++color_number;
-        }  
+        }
         for (int i = 0; i < our_barriers[b].width; ++i) {
             for (int j = 0; j < our_barriers[b].height; ++j) {
-                if (!our_barriers[b].destroyed)
-                {
+                if (!our_barriers[b].destroyed) {
                     set_display_data_pixel(parlcd_mem_base, our_barriers[b].x + i, our_barriers[b].y + j, colors[color_number]);
-                }
-                else {
+                } else {
                     set_display_data_pixel(parlcd_mem_base, our_barriers[b].x + i, our_barriers[b].y + j, 0u);
                 }
             }
-        } 
+        }
     }
 }
 
-
-bool bounce_from_barriers(int x, int y, int ball_w , int ball_h,unsigned char *parlcd_mem_base) {
+bool bounce_from_barriers(int x, int y, int ball_w, int ball_h, unsigned char *parlcd_mem_base)
+{
     bool ret = false;
-    for (int i = NUMBER_OF_BARRIERS_IN_ROW * NUMBER_OF_ROWS; i >= 0; --i)
-    {
-        if ((x+ball_w) > (our_barriers[i].x) && (our_barriers[i].x + our_barriers[i].width) > x &&  (y + ball_h) > our_barriers[i].y && (our_barriers[i].y + our_barriers[i].height) > y && !our_barriers[i].destroyed)
-        {
+    for (int i = NUMBER_OF_BARRIERS_IN_ROW * NUMBER_OF_ROWS; i >= 0; --i) {
+        if ((x + ball_w) > (our_barriers[i].x) && (our_barriers[i].x + our_barriers[i].width) > x && (y + ball_h) > our_barriers[i].y &&
+            (our_barriers[i].y + our_barriers[i].height) > y && !our_barriers[i].destroyed) {
             ret = true;
             our_barriers[i].destroyed = true;
             increment_players_score();

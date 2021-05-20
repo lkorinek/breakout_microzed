@@ -30,7 +30,7 @@ void move_ball(unsigned char *parlcd_mem_base)
     if (ball_1.x >= LCD_WIDTH - ball_1.width || ball_1.x <= ball_1.width) {
         ball_1.increment_x = -ball_1.increment_x;
     }
-    if (ball_1.y <= ball_1.height || ball_1.y >= LCD_HEIGHT - ball_1.height) {
+    if (ball_1.y <= ball_1.height + TOP_SPACE-5 || ball_1.y >= LCD_HEIGHT - ball_1.height) {
         ball_1.increment_y = -ball_1.increment_y;
         if (ball_1.y >= LCD_HEIGHT - ball_1.height) {
             decrement_players_lives();

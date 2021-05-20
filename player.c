@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <stdio.h>
 
 #include "mzapo_lcd_control.h"
 
@@ -70,3 +71,10 @@ int get_players_score() { return player_1.score; }
 void decrement_players_lives() { player_1.lives--; }
 
 player get_player_stats() { return player_1; }
+
+void draw_player_score(void)
+{
+    char score_text[250];
+    sprintf(score_text, "SCORE: %d", player_1.score);
+    draw_text(score_text, 25, 12, 2, 2);
+}

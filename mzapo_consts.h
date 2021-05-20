@@ -15,3 +15,7 @@
 //constants lcd
 #define LCD_WIDTH 480
 #define LCD_HEIGHT 320
+
+// Space for score on top of the screen
+#define TOP_SPACE 60
+

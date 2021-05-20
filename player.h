@@ -75,4 +75,6 @@ int get_players_score();
  */
 player get_player_stats();
 
+void draw_player_score(void);
+
 #endif

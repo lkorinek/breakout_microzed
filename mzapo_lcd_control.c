@@ -59,6 +59,7 @@ void draw_char(int x, int y, char ch, int scale, font_descriptor_t *fdes)
     for (int i = 0; i < fdes->height * scale; ++i) {
         font_bits_t row = fdes->bits[(idx)*fdes->height + i / scale];
         for (int j = 0; j < fdes->maxwidth * scale; j++) {
+            display_data[j + x + (i + y) * LCD_WIDTH] = 0u;
             if (row & (1 << (15 - j / scale))) {
                 display_data[j + x + (i + y) * LCD_WIDTH] = 0xffff;
             }
@@ -96,4 +97,12 @@ int char_width(font_descriptor_t *fdes, int ch)
         }
     }
     return width;
+}
+
+void draw_top_line(unsigned char *parlcd_mem_base) {
+    for (int i = TOP_SPACE-10; i < TOP_SPACE-5; ++i) {
+        for (int j = 0; j < LCD_WIDTH; j++) {
+            set_display_data_pixel(parlcd_mem_base, j, i, 0xffff);
+        }
+    }
 }
