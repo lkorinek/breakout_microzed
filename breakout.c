@@ -21,7 +21,7 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "threads.h"
+#include "ball.h"
 #include "mzapo_consts.h"
 #include "mzapo_lcd_control.h"
 #include "mzapo_led_control.h"
@@ -30,7 +30,7 @@
 #include "mzapo_regs.h"
 #include "player.h"
 #include "terminal.h"
-#include "ball.h"
+#include "threads.h"
 
 int main(int argc, char *argv[])
 {
@@ -40,10 +40,12 @@ int main(int argc, char *argv[])
     printf("Hello World!\n");
 
     control_led_line(4);
-    
+
     shared_data data = init_shared_data();
     extern pthread_mutex_t mtx;
+    extern pthread_cond_t convar;
     pthread_mutex_init(&mtx, NULL);
+    pthread_cond_init(&convar, NULL);
 
     pthread_t thrs[THREAD_COUNT];
     pthread_create(&thrs[0], NULL, input_thread, &data);
@@ -62,4 +64,3 @@ int main(int argc, char *argv[])
 
     return 0;
 }
-

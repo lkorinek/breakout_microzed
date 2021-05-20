@@ -6,15 +6,16 @@
 
 #include "ball.h"
 #include "barrier.h"
+#include "mzapo_knobs_control.h"
 #include "mzapo_lcd_control.h"
 #include "mzapo_phys.h"
 #include "mzapo_regs.h"
 #include "player.h"
 #include "terminal.h"
 #include "threads.h"
-#include "mzapo_knobs_control.h"
 
 pthread_mutex_t mtx;
+pthread_cond_t convar;
 
 shared_data init_shared_data(void)
 {
@@ -89,10 +90,14 @@ void *display_thread(void *v)
     init_parlcd(parlcd_mem_base);
     draw_black_screen(parlcd_mem_base);
     init_barriers();
-    draw_barriers(parlcd_mem_base);
+    update_barriers(parlcd_mem_base);
 
     // Draw new data onto display
     draw_display_data(parlcd_mem_base);
+
+    pthread_mutex_lock(&mtx);
+    pthread_cond_broadcast(&convar);
+    pthread_mutex_unlock(&mtx);
 
     while (run) {
         draw_player(parlcd_mem_base);
@@ -116,7 +121,9 @@ void *compute_thread(void *v)
     shared_data *data = (shared_data *)v;
     bool run = true;
     init_player_knobs(data->parlcd_mem_base);
-    usleep(2000000);
+    pthread_mutex_lock(&mtx);
+    pthread_cond_wait(&convar, &mtx);
+    pthread_mutex_unlock(&mtx);
     while (run) {
         struct timespec loop_delay = {.tv_sec = 0, .tv_nsec = 5 * 1000 * 1000};
 

@@ -26,12 +26,7 @@ void init_barriers();
 
 
 /*
- * Draws barriers to the display
- */
-void draw_barriers(unsigned char *parlcd_mem_base);
-
-/*
- * Remove old destroyed barriers 
+ * Remove old destroyed barriers and draw them
  */
 void update_barriers(unsigned char *parlcd_mem_base);
 
