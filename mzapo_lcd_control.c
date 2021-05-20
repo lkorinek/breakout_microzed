@@ -72,7 +72,7 @@ void draw_text(char *str, int x, int y, int scale, int font)
     if (font == 1) {
         fdes = &font_winFreeSystem14x16;
     } else {
-        fdes = &font_winFreeSystem14x16;
+        fdes = &font_rom8x16;
     }
 
     int length = strlen(str);
