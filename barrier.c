@@ -13,7 +13,8 @@
 
 barrier our_barriers[NUMBER_OF_BARRIERS];
 
-unsigned short colors[] = {0xf0f,0xfff,0xf0f,0xfff};
+
+unsigned short colors[] = {0xF800,0xF7E0,0xf0f,0xFFD5};
 const int space_for_text = 0;
 void init_barriers()
 {
