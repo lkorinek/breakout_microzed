@@ -14,5 +14,6 @@
 #define SPILED_REG_KNOBS_8BIT_o         0x024
 
 void init_player_knobs(unsigned char *mem_base);
-void control_player_knobs(unsigned char *mem_base, unsigned char *mem_base_lcd);
+void control_player_knob(unsigned char *mem_base, unsigned char *mem_base_lcd);
+void control_pause_knob(unsigned char *mem_base);
 #endif

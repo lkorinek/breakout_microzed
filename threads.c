@@ -60,7 +60,7 @@ void *output_thread(void *v)
         pthread_mutex_unlock(&mtx);
 
         // TODO: send message
-        printf("\rPressed button: %c Lives: %d SCORE: %d", c, get_players_lives(), get_players_score());
+        // printf("\rPressed button: %c Lives: %d SCORE: %d", c, get_players_lives(), get_players_score());
         fflush(stdout);
 
         if (get_players_lives() == 0) {
@@ -129,7 +129,8 @@ void *compute_thread(void *v)
     while (run) {
         struct timespec loop_delay = {.tv_sec = 0, .tv_nsec = 5 * 1000 * 1000};
 
-        control_player_knobs(data->spiled_mem_base, data->parlcd_mem_base);
+        control_player_knob(data->spiled_mem_base, data->parlcd_mem_base);
+        control_pause_knob(data->spiled_mem_base);
 
         pthread_mutex_lock(&mtx);
         run = data->run;

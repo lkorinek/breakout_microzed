@@ -51,4 +51,6 @@ void delete_ball(unsigned char *parlcd_mem_base);
  */
 void reset_ball();
 
+void freeze_ball(bool freeze);
+
 #endif
