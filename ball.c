@@ -13,8 +13,7 @@
 
 const int speed = 8;
 
-static ball ball_1 = {
-    .x = LCD_WIDTH / 2 - 50, .y = LCD_HEIGHT - 60, .height = 10, .width = 10, .increment_x = speed, .increment_y = -speed};
+static ball ball_1 = {.x = LCD_WIDTH / 2 - 50, .y = LCD_HEIGHT - 60, .height = 9, .width = 9, .increment_x = speed, .increment_y = -speed};
 
 void reset_ball()
 {
@@ -52,8 +51,12 @@ void bounce_ball(unsigned char *parlcd_mem_base)
 {
     player p_1 = get_player_stats();
 
-    if ((ball_1.x + ball_1.width) > p_1.x && (p_1.x + p_1.width) > ball_1.x && (ball_1.y + ball_1.height) > p_1.y) {
+    if ((ball_1.x + ball_1.width) > p_1.x && (p_1.x + p_1.width) > ball_1.x && (ball_1.y + ball_1.height) > p_1.y &&
+        (p_1.y + p_1.height) > ball_1.y) {
         ball_1.increment_y = -ball_1.increment_y;
+        if ((p_1.x + p_1.width/4 > ball_1.x && ball_1.increment_x > 0) || (p_1.x + p_1.width - p_1.width/4 < ball_1.x && ball_1.increment_x < 0)) {
+            ball_1.increment_x = -ball_1.increment_x;
+        }
     }
     if (bounce_from_barriers(ball_1.x, ball_1.y, ball_1.width, ball_1.height, parlcd_mem_base)) {
         ball_1.increment_y = -ball_1.increment_y;
@@ -64,7 +67,7 @@ void draw_ball(unsigned char *parlcd_mem_base)
 {
     for (int i = 0; i < ball_1.width; ++i) {
         for (int j = 0; j < ball_1.height; ++j) {
-            set_display_data_pixel(parlcd_mem_base, ball_1.x + i, ball_1.y + j, 0xfff);
+            set_display_data_pixel(parlcd_mem_base, ball_1.x + i, ball_1.y + j, 0xffff);
         }
     }
 }
