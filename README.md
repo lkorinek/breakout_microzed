@@ -24,7 +24,7 @@ May it get as many points as possible and possibly some joy for others :-).
     1. blue - pause, red - live lost, green - run game, 
 7. Game over screen
 8. upgrades
-    1. size (dec/inc), lives, player speed, score
+    1. ~~size (dec/inc)~~, ~~lives~~, #player speed#, ~~score~~
 9. Two Players
 ***************
 #### Used functions and files:
