@@ -6,6 +6,7 @@
 
 #include "ball.h"
 #include "barrier.h"
+#include "menu.h"
 #include "mzapo_knobs_control.h"
 #include "mzapo_lcd_control.h"
 #include "mzapo_phys.h"
@@ -88,7 +89,17 @@ void *display_thread(void *v)
     // Initialize LCD display
     unsigned char *parlcd_mem_base = data->parlcd_mem_base;
     init_parlcd(parlcd_mem_base);
-    draw_black_screen(parlcd_mem_base);
+
+    // Menu
+    pthread_mutex_lock(&mtx);
+    pthread_cond_broadcast(&convar);
+    pthread_mutex_unlock(&mtx);
+    draw_menu(parlcd_mem_base, data);
+    pthread_mutex_lock(&mtx);
+    run = data->run;
+    pthread_mutex_unlock(&mtx);
+
+    // Game
     init_barriers();
     draw_top_line(parlcd_mem_base);
     update_barriers(parlcd_mem_base);
@@ -96,13 +107,6 @@ void *display_thread(void *v)
 
     // Init game
     draw_hearts();
-
-    // Draw new data onto display
-    draw_display_data(parlcd_mem_base);
-
-    pthread_mutex_lock(&mtx);
-    pthread_cond_broadcast(&convar);
-    pthread_mutex_unlock(&mtx);
 
     while (run) {
         move_upgrade(parlcd_mem_base);
@@ -112,6 +116,10 @@ void *display_thread(void *v)
 
         // Draw new data onto display
         draw_display_data(parlcd_mem_base);
+
+        if (GAME_STATS.menu) { // move to mennu
+            draw_menu(parlcd_mem_base, data);
+        }
 
         pthread_mutex_lock(&mtx);
         run = data->run;
@@ -127,14 +135,13 @@ void *compute_thread(void *v)
 {
     shared_data *data = (shared_data *)v;
     bool run = true;
-    init_player_knobs(data->parlcd_mem_base);
+    init_red_knobs(data->parlcd_mem_base);
     pthread_mutex_lock(&mtx);
     pthread_cond_wait(&convar, &mtx);
     pthread_mutex_unlock(&mtx);
     while (run) {
         struct timespec loop_delay = {.tv_sec = 0, .tv_nsec = 5 * 1000 * 1000};
-
-        control_player_knob(data->spiled_mem_base, data->parlcd_mem_base);
+        control_red_knob(data->spiled_mem_base, data->parlcd_mem_base);
         control_pause_knob(data->spiled_mem_base);
 
         pthread_mutex_lock(&mtx);

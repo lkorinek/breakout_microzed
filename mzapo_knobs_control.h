@@ -11,9 +11,10 @@
 #define MZAPO_KNOBS_CONTROL
 
 #define SPILED_REG_KBDRD_KNOBS_DIRECT_o 0x020
-#define SPILED_REG_KNOBS_8BIT_o         0x024
+#define SPILED_REG_KNOBS_8BIT_o 0x024
 
-void init_player_knobs(unsigned char *mem_base);
-void control_player_knob(unsigned char *mem_base, unsigned char *mem_base_lcd);
+void init_red_knobs(unsigned char *mem_base);
+void control_red_knob(unsigned char *mem_base, unsigned char *mem_base_lcd);
 void control_pause_knob(unsigned char *mem_base);
+
 #endif
