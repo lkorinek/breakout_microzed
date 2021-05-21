@@ -29,6 +29,7 @@ void draw_menu(unsigned char *parlcd_mem_base, shared_data *data)
         run = data->run;
         pthread_mutex_unlock(&mtx);
     }
+    set_display_data_color(parlcd_mem_base,0u);
 }
 
 void draw_menu_box(unsigned char *parlcd_mem_base)
@@ -102,3 +103,11 @@ void change_menu_state(int increment)
 
 //     draw_ball(parlcd_mem_base);
 // }
+
+
+void game_over_screen(unsigned char *parlcd_mem_base) {
+    int scale = 11;
+    set_display_data_color(parlcd_mem_base,0u);
+    draw_text("GAME", LCD_WIDTH/2 - 16*scale, 25,scale,2,0xffff,false);
+    draw_text("OVER", LCD_WIDTH/2 - 16*scale,(16 * scale) - 25,scale,2,0xf800,false);
+}

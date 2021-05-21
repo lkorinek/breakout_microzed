@@ -116,15 +116,19 @@ void *display_thread(void *v)
 
         // Draw new data onto display
         draw_display_data(parlcd_mem_base);
-
+        
         if (GAME_STATS.menu) { // move to mennu
             draw_menu(parlcd_mem_base, data);
         }
-
+        
         pthread_mutex_lock(&mtx);
         run = data->run;
         pthread_mutex_unlock(&mtx);
     }
+
+    game_over_screen(parlcd_mem_base);
+    draw_display_data(parlcd_mem_base);
+    sleep(5);
 
     // Make screen black at the end
     draw_black_screen(parlcd_mem_base);
