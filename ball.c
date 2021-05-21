@@ -82,13 +82,17 @@ void delete_ball(unsigned char *parlcd_mem_base)
     }
 }
 
+int last_x = 0;
+int last_y = 0;
 void freeze_ball(bool freeze)
 {
     if (freeze) {
+        last_x = ball_1.increment_x;
+        last_y = ball_1.increment_y;
         ball_1.increment_x = 0;
         ball_1.increment_y = 0;
     } else {
-        ball_1.increment_x = speed;
-        ball_1.increment_y = -speed;
+        ball_1.increment_x = last_x;
+        ball_1.increment_y = last_y;
     }
 }
