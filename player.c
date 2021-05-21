@@ -5,6 +5,7 @@
 
 #include "mzapo_consts.h"
 #include "player.h"
+#include "mzapo_led_control.h"
 
 static player player_1 = {.x = LCD_WIDTH / 2 - 50, .y = LCD_HEIGHT - 40, .height = 11, .width = 100, .lives = 4, .score = 0};
 
@@ -68,6 +69,8 @@ void increment_players_lives()
 {
     if (player_1.lives < 4) {
         player_1.lives++;
+        control_led_line(get_players_lives());
+        add_heart();
     }
 }
 
@@ -79,9 +82,15 @@ void decrement_players_lives()
 {
     player_1.lives--;
     remove_heart();
+    control_led_line(get_players_lives());
+    reset_player_settings();
 }
 
 player get_player_stats() { return player_1; }
+
+void enlarge_player() { player_1.width += 20; }
+
+void reset_player_settings() { player_1.width = 100; }
 
 void draw_player_score(void)
 {
@@ -98,6 +107,8 @@ void draw_hearts(void)
 }
 
 void remove_heart(void) { draw_char(220 + player_1.lives * 20, 10, 3, 2, 2, 0xffff, true); }
+
+void add_heart(void) { draw_char(220 + (player_1.lives-1) * 20, 10, 3, 2, 2, 0xf800, true); }
 
 void draw_difficulity(void)
 {

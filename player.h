@@ -75,6 +75,10 @@ int get_players_score();
 
 void increment_players_lives();
 
+void enlarge_player();
+
+void reset_player_settings();
+
 /*
  * Return all stats of the player
  * return: player struct
@@ -85,5 +89,6 @@ void draw_player_score(void);
 void draw_hearts(void);
 void draw_difficulity(void);
 void remove_heart(void);
+void add_heart(void);
 
 #endif
