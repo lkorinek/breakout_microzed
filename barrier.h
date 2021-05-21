@@ -18,12 +18,26 @@ typedef struct {
     bool destroyed;
 } barrier;
 
+typedef struct {
+    int x;
+    int y;
+    int type_upgrade;
+    int speed;
+    bool falling_upgrade;
+} upgrade;
 
 /*
  * Initializes barriers for the game
  */
 void init_barriers();
 
+void release_of_upgrade(int upgrade, int x, int y);
+
+void move_upgrade(unsigned char *parlcd_mem_base);
+
+void reset_upgrade();
+
+void initialize_upgrade(int idx);
 
 /*
  * Remove old destroyed barriers and draw them
