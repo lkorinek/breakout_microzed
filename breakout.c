@@ -42,6 +42,8 @@ int main(int argc, char *argv[])
     printf("Hello World!\n");
 
     control_led_line(4);
+    turn_on_RGB(1,GREEN);
+    turn_on_RGB(2,GREEN);
 
     shared_data data = init_shared_data();
     extern pthread_mutex_t mtx;

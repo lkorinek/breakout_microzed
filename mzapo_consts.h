@@ -16,6 +16,7 @@
 #define RED 0xff0000
 #define GREEN 0x00ff00
 #define BLUE 0x0000ff
+#define YELLOW 0xffff00
 
 //constants lcd
 #define LCD_WIDTH 480
