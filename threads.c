@@ -60,7 +60,7 @@ void *output_thread(void *v)
         pthread_mutex_unlock(&mtx);
 
         // TODO: send message
-        // printf("\rPressed button: %c Lives: %d SCORE: %d", c, get_players_lives(), get_players_score());
+        printf("\rPressed button: %c Lives: %d SCORE: %d", c, get_players_lives(), get_players_score());
         fflush(stdout);
 
         if (get_players_lives() == 0) {
