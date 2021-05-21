@@ -90,15 +90,15 @@ void move_upgrade(unsigned char *parlcd_mem_base)
                 switch (current_upgrade.type_upgrade) {
                 case 3:
                     increment_players_lives();
-                    turn_on_RGB(2,RED);
+                    turn_on_RGB(RED,2);
                     break;
                 case 36:
                     increment_players_score(50);
-                    turn_on_RGB(2,YELLOW);
+                    turn_on_RGB(YELLOW,2);
                     break;
                 case 18:
                     enlarge_player();
-                    turn_on_RGB(2,BLUE);
+                    turn_on_RGB(BLUE,2);
                     break;
                 default:
                     break;
@@ -135,7 +135,7 @@ bool bounce_from_barriers(int x, int y, int ball_w, int ball_h, unsigned char *p
         if ((x + ball_w) > (our_barriers[i].x) && (our_barriers[i].x + our_barriers[i].width) > x && (y + ball_h) > our_barriers[i].y &&
             (our_barriers[i].y + our_barriers[i].height) > y && !our_barriers[i].destroyed) {
             ret = true;
-            turn_on_RGB(1,GREEN);
+            turn_on_RGB(GREEN,1);
             our_barriers[i].destroyed = true;
             upgrade = rand() % 200;
             if (upgrade < 10 && !current_upgrade.falling_upgrade) { // Hearts

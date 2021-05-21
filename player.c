@@ -84,7 +84,7 @@ void decrement_players_lives()
     remove_heart();
     control_led_line(get_players_lives());
     reset_player_settings();
-    turn_on_RGB(1,RED);
+    turn_on_RGB(RED,1);
 }
 
 player get_player_stats() { return player_1; }
