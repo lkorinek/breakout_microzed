@@ -71,7 +71,7 @@ int get_players_score() { return player_1.score; }
 void decrement_players_lives()
 {
     player_1.lives--;
-    draw_hearts();
+    remove_heart();
 }
 
 player get_player_stats() { return player_1; }
@@ -86,6 +86,28 @@ void draw_player_score(void)
 void draw_hearts(void)
 {
     for (int i = 0; i < player_1.lives; ++i) {
-        draw_char(200 + i * 20, 10, 3, 2, 2, 0xf800);
+        draw_char(220 + i * 20, 10, 3, 2, 2, 0xf800);
     }
+}
+
+void remove_heart(void) { draw_char(220 + player_1.lives * 20, 10, 3, 2, 2, 0xffff); }
+
+void draw_difficulity(void)
+{
+    char difficulity[40];
+    switch (GAME_STATS.difficulity) {
+    case 1:
+        sprintf(difficulity, "EASY");
+        break;
+    case 2:
+        sprintf(difficulity, "MEDIUM");
+        break;
+    case 3:
+        sprintf(difficulity, "HARD");
+        break;
+    default:
+        fprintf(stderr, "ERROR: Wrong difficulity set, could not draw on screen.\n");
+        break;
+    }
+    draw_text(difficulity, 360, 10, 2, 2, 0xffff);
 }

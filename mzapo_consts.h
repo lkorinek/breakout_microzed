@@ -7,6 +7,9 @@
 
  **/
 
+#ifndef MZAPO_CONSTS
+#define MZAPO_CONSTS
+
 #include <stdbool.h>
 
 // mainly for mzapo_led_functions
@@ -28,3 +31,5 @@ typedef struct {
   int num_players;
   int controls;
 } game_settings;
+
+#endif

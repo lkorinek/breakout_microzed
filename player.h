@@ -10,6 +10,10 @@
 #ifndef PLAYER
 #define PLAYER
 
+#include "mzapo_consts.h"
+
+extern game_settings GAME_STATS;
+
 typedef struct {
     int x;
     int y;
@@ -76,5 +80,8 @@ int get_players_score();
 player get_player_stats();
 
 void draw_player_score(void);
+void draw_hearts(void);
+void draw_difficulity(void);
+void remove_heart(void);
 
 #endif

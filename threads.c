@@ -92,10 +92,10 @@ void *display_thread(void *v)
     init_barriers();
     draw_top_line(parlcd_mem_base);
     update_barriers(parlcd_mem_base);
+    draw_difficulity();
 
     // Init game
     draw_hearts();
-    draw_player_score();
 
     // Draw new data onto display
     draw_display_data(parlcd_mem_base);
@@ -107,6 +107,7 @@ void *display_thread(void *v)
     while (run) {
         move_ball(parlcd_mem_base);
         draw_player(parlcd_mem_base);
+        draw_player_score();
 
         // Draw new data onto display
         draw_display_data(parlcd_mem_base);
