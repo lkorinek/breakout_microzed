@@ -54,12 +54,7 @@ void draw_display_data(unsigned char *parlcd_mem_base)
 
 void draw_char(int x, int y, char ch, int scale, int font, unsigned short color)
 {
-    font_descriptor_t *fdes;
-    if (font == 1) {
-        fdes = &font_winFreeSystem14x16;
-    } else {
-        fdes = &font_rom8x16;
-    }
+    font_descriptor_t *fdes = font == 1 ? &font_winFreeSystem14x16 : &font_rom8x16;
 
     int idx = ch - fdes->firstchar;
 
@@ -76,24 +71,20 @@ void draw_char(int x, int y, char ch, int scale, int font, unsigned short color)
 
 void draw_text(char *str, int x, int y, int scale, int font, unsigned short color)
 {
-    font_descriptor_t *fdes;
-    if (font == 1) {
-        fdes = &font_winFreeSystem14x16;
-    } else {
-        fdes = &font_rom8x16;
-    }
 
     int length = strlen(str);
     char *curr_point = str;
     for (int i = 0; i < length; ++i) {
         draw_char(x, y, *curr_point, scale, font, color);
-        x += char_width(fdes, *curr_point) * scale;
+        x += char_width(font, *curr_point) * scale;
         ++curr_point;
     }
 }
 
-int char_width(font_descriptor_t *fdes, int ch)
+int char_width(int font, int ch)
 {
+    font_descriptor_t *fdes = font == 1 ? &font_winFreeSystem14x16 : &font_rom8x16;
+
     int width = 0;
     if ((ch >= fdes->firstchar) && (ch - fdes->firstchar < fdes->size)) {
         ch -= fdes->firstchar;

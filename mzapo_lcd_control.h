@@ -45,7 +45,7 @@ void draw_char(int x, int y, char ch, int scale, int font, unsigned short color)
 
 void draw_text(char *str, int x, int y, int scale, int font, unsigned short color);
 
-int char_width(font_descriptor_t *fdes, int ch);
+int char_width(int font, int ch);
 void draw_top_line(unsigned char *parlcd_mem_base);
 
 #endif
