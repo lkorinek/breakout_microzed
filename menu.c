@@ -11,13 +11,13 @@ extern pthread_mutex_t mtx;
 
 int menu_selected = 0;
 int menu_selected_max = 4;
+bool run_menu = true;
 
 void draw_menu(unsigned char *parlcd_mem_base, shared_data *data)
 {
-    bool run = true;
     draw_menu_box(parlcd_mem_base);
 
-    while (GAME_STATS.menu && run) {
+    while (GAME_STATS.menu && run_menu) {
         draw_menu_box(parlcd_mem_base);
 
         draw_menu_options();
@@ -26,10 +26,10 @@ void draw_menu(unsigned char *parlcd_mem_base, shared_data *data)
         draw_display_data(parlcd_mem_base);
 
         pthread_mutex_lock(&mtx);
-        run = data->run;
+        run_menu = data->run && run_menu && !GAME_STATS.exit;
         pthread_mutex_unlock(&mtx);
     }
-    set_display_data_color(parlcd_mem_base,0u);
+    set_display_data_color(parlcd_mem_base, 0u);
 }
 
 void draw_menu_box(unsigned char *parlcd_mem_base)
@@ -43,8 +43,29 @@ void draw_menu_box(unsigned char *parlcd_mem_base)
     draw_text("  BREAKOUT", LCD_WIDTH / 5 + 12, LCD_HEIGHT / 8 + 10, 3, 1, 0xffff, true);
 }
 
+void forward_selected_option_menu(void)
+{
+    switch (menu_selected) {
+    case 0:
+        GAME_STATS.menu = false;
+        run_menu = false;
+        break;
+    case 1:
+
+        break;
+    case 2:
+
+        break;
+    case 3:
+        GAME_STATS.exit = true;
+        break;
+    default:
+        break;
+    }
+}
+
 void draw_menu_options(void)
-{   
+{
     if (menu_selected == 0) {
         draw_text("START", LCD_WIDTH / 5 + 79, LCD_HEIGHT / 8 + 70, 3, 2, 0xffff, true);
 
@@ -104,10 +125,10 @@ void change_menu_state(int increment)
 //     draw_ball(parlcd_mem_base);
 // }
 
-
-void game_over_screen(unsigned char *parlcd_mem_base) {
+void game_over_screen(unsigned char *parlcd_mem_base)
+{
     int scale = 11;
-    set_display_data_color(parlcd_mem_base,0u);
-    draw_text("GAME", LCD_WIDTH/2 - 16*scale, 25,scale,2,0xffff,false);
-    draw_text("OVER", LCD_WIDTH/2 - 16*scale,(16 * scale) - 25,scale,2,0xf800,false);
+    set_display_data_color(parlcd_mem_base, 0u);
+    draw_text("GAME", LCD_WIDTH / 2 - 16 * scale, 25, scale, 2, 0xffff, false);
+    draw_text("OVER", LCD_WIDTH / 2 - 16 * scale, (16 * scale) - 25, scale, 2, 0xf800, false);
 }

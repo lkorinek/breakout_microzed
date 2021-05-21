@@ -42,7 +42,7 @@ void control_red_knob(unsigned char *mem_base, unsigned char *mem_base_lcd)
     }
 }
 
-void control_pause_knob(unsigned char *mem_base)
+void control_click_knob(unsigned char *mem_base)
 {
     uint32_t rgb_knobs_value = *(volatile uint32_t *)(mem_base + SPILED_REG_KNOBS_8BIT_o);
 
@@ -52,6 +52,11 @@ void control_pause_knob(unsigned char *mem_base)
         freeze = !freeze;
         pressed = true;
         freeze_ball(freeze);
+    } else if (value == 4) {
+        if (GAME_STATS.menu) {
+            forward_selected_option_menu();
+        }
+        pressed = false;
     } else if (value == 0) {
         pressed = false;
     }

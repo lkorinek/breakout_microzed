@@ -23,7 +23,7 @@ const unsigned short colors[] = {0xf800, 0xfD00, 0xffe0, 0x7e0, 0x3ff, 0xD017};
 
 void init_barriers()
 {
-    int x = 0, y = TOP_SPACE, shift = 5;
+    int x = 0, y = TOP_SPACE + 10, shift = 5;
     for (int i = 0; i < NUMBER_OF_BARRIERS_IN_ROW * NUMBER_OF_ROWS; ++i) {
         our_barriers[i].x = x;
         our_barriers[i].y = y;
@@ -133,15 +133,15 @@ bool bounce_from_barriers(int x, int y, int ball_w, int ball_h, unsigned char *p
             ret = true;
             our_barriers[i].destroyed = true;
             upgrade = rand() % 200;
-            if (upgrade < 40 && !current_upgrade.falling_upgrade) {
+            if (upgrade < 10 && !current_upgrade.falling_upgrade) { // Hearts
                 initialize_upgrade(i);
                 current_upgrade.type_upgrade = 3;
-            } else if (upgrade > 40 && upgrade < 120 && !current_upgrade.falling_upgrade) {
-                initialize_upgrade(i);
-                current_upgrade.type_upgrade = 4;
-            } else if (!current_upgrade.falling_upgrade) {
+            } else if (upgrade < 50 && !current_upgrade.falling_upgrade) { // Enlargment
                 initialize_upgrade(i);
                 current_upgrade.type_upgrade = 18;
+            } else if (!current_upgrade.falling_upgrade) { // Score
+                initialize_upgrade(i);
+                current_upgrade.type_upgrade = 36;
             }
             increment_players_score(10);
             update_barriers(parlcd_mem_base);

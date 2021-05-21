@@ -43,7 +43,7 @@ void *input_thread(void *v)
         }
 
         pthread_mutex_lock(&mtx);
-        run = data->run;
+        run = data->run && !GAME_STATS.exit;
         pthread_mutex_unlock(&mtx);
     }
 
@@ -73,7 +73,7 @@ void *output_thread(void *v)
         }
 
         pthread_mutex_lock(&mtx);
-        run = data->run;
+        run = data->run && !GAME_STATS.exit;
         pthread_mutex_unlock(&mtx);
     }
 
@@ -96,7 +96,7 @@ void *display_thread(void *v)
     pthread_mutex_unlock(&mtx);
     draw_menu(parlcd_mem_base, data);
     pthread_mutex_lock(&mtx);
-    run = data->run;
+    run = data->run && !GAME_STATS.exit;
     pthread_mutex_unlock(&mtx);
 
     // Game
@@ -116,19 +116,19 @@ void *display_thread(void *v)
 
         // Draw new data onto display
         draw_display_data(parlcd_mem_base);
-        
+
         if (GAME_STATS.menu) { // move to mennu
             draw_menu(parlcd_mem_base, data);
         }
-        
+
         pthread_mutex_lock(&mtx);
-        run = data->run;
+        run = data->run && !GAME_STATS.exit;
         pthread_mutex_unlock(&mtx);
     }
 
     game_over_screen(parlcd_mem_base);
     draw_display_data(parlcd_mem_base);
-    sleep(5);
+    sleep(1);
 
     // Make screen black at the end
     draw_black_screen(parlcd_mem_base);
@@ -146,10 +146,10 @@ void *compute_thread(void *v)
     while (run) {
         struct timespec loop_delay = {.tv_sec = 0, .tv_nsec = 5 * 1000 * 1000};
         control_red_knob(data->spiled_mem_base, data->parlcd_mem_base);
-        control_pause_knob(data->spiled_mem_base);
+        control_click_knob(data->spiled_mem_base);
 
         pthread_mutex_lock(&mtx);
-        run = data->run;
+        run = data->run && !GAME_STATS.exit;
         pthread_mutex_unlock(&mtx);
 
         clock_nanosleep(CLOCK_MONOTONIC, 0, &loop_delay, NULL);

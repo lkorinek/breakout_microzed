@@ -101,7 +101,7 @@ int char_width(int font, int ch)
 
 void draw_top_line(unsigned char *parlcd_mem_base)
 {
-    for (int i = TOP_SPACE - 10; i < TOP_SPACE - 5; ++i) {
+    for (int i = TOP_SPACE - 15; i < TOP_SPACE - 10; ++i) {
         for (int j = 0; j < LCD_WIDTH; j++) {
             set_display_data_pixel(parlcd_mem_base, j, i, 0xffff);
         }

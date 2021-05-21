@@ -15,6 +15,6 @@
 
 void init_red_knobs(unsigned char *mem_base);
 void control_red_knob(unsigned char *mem_base, unsigned char *mem_base_lcd);
-void control_pause_knob(unsigned char *mem_base);
+void control_click_knob(unsigned char *mem_base);
 
 #endif

@@ -7,7 +7,7 @@
 #include "player.h"
 #include "mzapo_led_control.h"
 
-static player player_1 = {.x = LCD_WIDTH / 2 - 50, .y = LCD_HEIGHT - 40, .height = 11, .width = 100, .lives = 4, .score = 0};
+static player player_1 = {.x = LCD_WIDTH / 2 - 50, .y = LCD_HEIGHT - 40, .height = 11, .width = 85, .lives = 4, .score = 0};
 
 void draw_player(unsigned char *parlcd_mem_base)
 {

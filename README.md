@@ -18,7 +18,7 @@ May it get as many points as possible and possibly some joy for others :-).
 3. ~~Score~~
 4. Menu
     1. ~~title~~
-    2. start, settings (color of player, number of players, difficulity, controls), credits, exit
+    2. start, settings (color of player, number of players, difficulity, controls, demo mode), credits, exit
 5. ~~Lives LED~~
 6. game LED
     1. blue - pause, red - live lost, green - run game, 
@@ -26,6 +26,7 @@ May it get as many points as possible and possibly some joy for others :-).
 8. upgrades
     1. ~~size (dec/inc)~~, ~~lives~~, #player speed#, ~~score~~
 9. Two Players
+10. insane mode - upgrades dont stop, upgrady odebiraji skore a zivoty 
 ***************
 #### Used functions and files:
 Here is the list of files and functions within these files we implemented and used.

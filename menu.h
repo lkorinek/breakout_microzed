@@ -22,4 +22,6 @@ void draw_menu_box(unsigned char *parlcd_mem_base);
 void draw_menu_options(void);
 void change_menu_state(int increment);
 void game_over_screen(unsigned char *parlcd_mem_base);
+void forward_selected_option_menu(void);
+
 #endif
