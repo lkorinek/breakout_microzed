@@ -15,9 +15,9 @@ May it get as many points as possible and possibly some joy for others :-).
     2. create macro definitions (maybe settings.c?)
     3. free display data
 2. ~~Ball~~
-3. Score
+3. ~~Score~~
 4. Menu
-    1. title
+    1. ~~title~~
     2. start, settings (color of player, number of players, difficulity, controls), credits, exit
 5. ~~Lives LED~~
 6. game LED
