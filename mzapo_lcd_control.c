@@ -52,7 +52,7 @@ void draw_display_data(unsigned char *parlcd_mem_base)
     }
 }
 
-void draw_char(int x, int y, char ch, int scale, int font, unsigned short color)
+void draw_char(int x, int y, char ch, int scale, int font, unsigned short color, bool background)
 {
     font_descriptor_t *fdes = font == 1 ? &font_winFreeSystem14x16 : &font_rom8x16;
 
@@ -61,7 +61,9 @@ void draw_char(int x, int y, char ch, int scale, int font, unsigned short color)
     for (int i = 0; i < fdes->height * scale; ++i) {
         font_bits_t row = fdes->bits[(idx)*fdes->height + i / scale];
         for (int j = 0; j < fdes->maxwidth * scale; j++) {
-            display_data[j + x + (i + y) * LCD_WIDTH] = 0u;
+            if (background) {
+                display_data[j + x + (i + y) * LCD_WIDTH] = 0u;
+            }
             if (row & (1 << (15 - j / scale))) {
                 display_data[j + x + (i + y) * LCD_WIDTH] = color;
             }
@@ -69,13 +71,13 @@ void draw_char(int x, int y, char ch, int scale, int font, unsigned short color)
     }
 }
 
-void draw_text(char *str, int x, int y, int scale, int font, unsigned short color)
+void draw_text(char *str, int x, int y, int scale, int font, unsigned short color, bool background)
 {
 
     int length = strlen(str);
     char *curr_point = str;
     for (int i = 0; i < length; ++i) {
-        draw_char(x, y, *curr_point, scale, font, color);
+        draw_char(x, y, *curr_point, scale, font, color, background);
         x += char_width(font, *curr_point) * scale;
         ++curr_point;
     }

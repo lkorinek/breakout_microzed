@@ -87,17 +87,17 @@ void draw_player_score(void)
 {
     char score_text[250];
     sprintf(score_text, "SCORE: %d", player_1.score);
-    draw_text(score_text, 25, 12, 2, 2, 0xffff);
+    draw_text(score_text, 25, 12, 2, 2, 0xffff, true);
 }
 
 void draw_hearts(void)
 {
     for (int i = 0; i < player_1.lives; ++i) {
-        draw_char(220 + i * 20, 10, 3, 2, 2, 0xf800);
+        draw_char(220 + i * 20, 10, 3, 2, 2, 0xf800, true);
     }
 }
 
-void remove_heart(void) { draw_char(220 + player_1.lives * 20, 10, 3, 2, 2, 0xffff); }
+void remove_heart(void) { draw_char(220 + player_1.lives * 20, 10, 3, 2, 2, 0xffff, true); }
 
 void draw_difficulity(void)
 {
@@ -116,5 +116,5 @@ void draw_difficulity(void)
         fprintf(stderr, "ERROR: Wrong difficulity set, could not draw on screen.\n");
         break;
     }
-    draw_text(difficulity, 360, 10, 2, 2, 0xffff);
+    draw_text(difficulity, 360, 10, 2, 2, 0xffff, true);
 }
