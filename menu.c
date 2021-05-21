@@ -132,3 +132,17 @@ void game_over_screen(unsigned char *parlcd_mem_base)
     draw_text("GAME", LCD_WIDTH / 2 - 16 * scale, 25, scale, 2, 0xffff, false);
     draw_text("OVER", LCD_WIDTH / 2 - 16 * scale, (16 * scale) - 25, scale, 2, 0xf800, false);
 }
+
+void credits_page(unsigned char *parlcd_mem_base)
+{
+    int shift = 10;
+    int scale = 3;
+    set_display_data_color(parlcd_mem_base, 0u);
+    draw_text("MADE BY/AS:", LCD_WIDTH / 4 - (16 * scale) - 20, 25, scale, 2, 0xf800, false);
+    scale = 2;
+    draw_text("$ chladrad", LCD_WIDTH / 3 - 16 * scale, (16 * 5), scale, 2, 0xfD00, false);
+    draw_text("$ korinlu1", LCD_WIDTH / 3 - 16 * scale, (16 * 5) + (16 * scale) + shift, scale, 2, 0xffe0, false);
+    draw_text("As semestral project for APO", 16 * scale, (16 * 5) + (16 * scale)*2 + shift, scale, 2, 0x7e0, false);
+    draw_text("We hope you will enjoy it", 16 * scale, (16 * 5) + (16 * scale)*3 + shift, scale, 2, 0x3ff, false);
+    draw_text("Go play the awesome game !", 16 * scale, (16 * 5) + (16 * scale)*4 + shift, scale, 2, 0xD017, false);
+}
