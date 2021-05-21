@@ -105,6 +105,7 @@ void *display_thread(void *v)
     pthread_mutex_unlock(&mtx);
 
     while (run) {
+        move_upgrade(parlcd_mem_base);
         move_ball(parlcd_mem_base);
         draw_player(parlcd_mem_base);
         draw_player_score();

@@ -34,7 +34,6 @@ void move_ball(unsigned char *parlcd_mem_base)
         ball_1.increment_y = -ball_1.increment_y;
         if (ball_1.y >= LCD_HEIGHT - ball_1.height) {
             decrement_players_lives();
-            control_led_line(get_players_lives());
             reset_ball();
         }
     }
