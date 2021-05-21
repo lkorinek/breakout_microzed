@@ -7,6 +7,8 @@
 
  **/
 
+#include <stdbool.h>
+
 // mainly for mzapo_led_functions
 #define RED 0xff0000
 #define GREEN 0x00ff00
@@ -19,3 +21,10 @@
 // Space for score on top of the screen
 #define TOP_SPACE 60
 
+typedef struct {
+  bool menu;
+  bool exit;
+  int difficulity;
+  int num_players;
+  int controls;
+} game_settings;

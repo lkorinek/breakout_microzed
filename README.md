@@ -21,6 +21,7 @@ May it get as many points as possible and possibly some joy for others :-).
     2. start, settings (color of player, number of players, difficulity, controls), credits, exit
 5. ~~Lives LED~~
 6. game LED
+    1. blue - pause, red - life lost, green - run game, 
 7. Game over screen
 8. upgrades
     1. size (dec/inc), lifes, player speed, score
