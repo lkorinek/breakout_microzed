@@ -68,7 +68,11 @@ void increment_players_score() { player_1.score += 10; }
 
 int get_players_score() { return player_1.score; }
 
-void decrement_players_lives() { player_1.lives--; }
+void decrement_players_lives()
+{
+    player_1.lives--;
+    draw_hearts();
+}
 
 player get_player_stats() { return player_1; }
 
@@ -76,5 +80,12 @@ void draw_player_score(void)
 {
     char score_text[250];
     sprintf(score_text, "SCORE: %d", player_1.score);
-    draw_text(score_text, 25, 12, 2, 2);
+    draw_text(score_text, 25, 12, 2, 2, 0xffff);
+}
+
+void draw_hearts(void)
+{
+    for (int i = 0; i < player_1.lives; ++i) {
+        draw_char(200 + i * 20, 10, 3, 2, 2, 0xf800);
+    }
 }
