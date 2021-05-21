@@ -65,13 +65,15 @@ void decrement_players_lives();
 /*
  * Increment player lifes by one
  */
-void increment_players_score();
+void increment_players_score(int increment);
 
 /*
  * Get score of the player
  * return: score number
  */
 int get_players_score();
+
+void increment_players_lives();
 
 /*
  * Return all stats of the player

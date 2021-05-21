@@ -64,7 +64,14 @@ void move_player(unsigned char *parlcd_mem_base, int x_move)
 
 int get_players_lives() { return player_1.lives; }
 
-void increment_players_score() { player_1.score += 10; }
+void increment_players_lives()
+{
+    if (player_1.lives < 4) {
+        player_1.lives++;
+    }
+}
+
+void increment_players_score(int increment) { player_1.score += increment; }
 
 int get_players_score() { return player_1.score; }
 
