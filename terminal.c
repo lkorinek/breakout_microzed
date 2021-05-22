@@ -28,13 +28,14 @@ char get_terminal_input(void)
     char c;
     int r = read(0, &c, 1);
 
-    if (r > 0) {
+    int speed = 8;
+    if (!GAME_STATS.controls && r > 0) {
         switch (c) {
         case 'a':
-            set_player_speed(-8);
+            set_player_speed(-speed);
             break;
         case 'd':
-            set_player_speed(8);
+            set_player_speed(speed);
             break;
         case 's':
             set_player_speed(0);
@@ -43,6 +44,5 @@ char get_terminal_input(void)
             break;
         }
     }
-
     return c;
 }

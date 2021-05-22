@@ -4,10 +4,13 @@
 #include "mzapo_lcd_control.h"
 
 #include "mzapo_consts.h"
-#include "player.h"
 #include "mzapo_led_control.h"
+#include "player.h"
 
-static player player_1 = {.x = LCD_WIDTH / 2 - 50, .y = LCD_HEIGHT - 40, .height = 11, .width = 85, .lives = 4, .score = 0};
+const int max_colors = 6;
+const unsigned short player_colors[] = {0xf80b, 0xfD00, 0xffe0, 0x7e0, 0x3ff, 0xD017};
+static player player_1 = {
+    .x = LCD_WIDTH / 2 - 50, .y = LCD_HEIGHT - 40, .height = 11, .width = 85, .lives = 4, .score = 0, .color = 0};
 
 void draw_player(unsigned char *parlcd_mem_base)
 {
@@ -18,7 +21,7 @@ void draw_player(unsigned char *parlcd_mem_base)
 
     for (int i = 0; i < player_1.width; ++i) {
         for (int j = 0; j < player_1.height; ++j) {
-            set_display_data_pixel(parlcd_mem_base, player_1.x + i, player_1.y + j, 0xf80b);
+            set_display_data_pixel(parlcd_mem_base, player_1.x + i, player_1.y + j, player_colors[player_1.color]);
         }
     }
 }
@@ -43,6 +46,16 @@ void decrement_player_speed()
     }
 }
 
+void change_player_color(void)
+{
+    player_1.color += 1;
+    if (player_1.color == max_colors) {
+        player_1.color = 0;
+    }
+}
+
+unsigned short get_player_color(void) { return player_colors[player_1.color]; }
+
 void move_player(unsigned char *parlcd_mem_base, int x_move)
 {
     bool move = true;
@@ -56,7 +69,7 @@ void move_player(unsigned char *parlcd_mem_base, int x_move)
         remove_player(parlcd_mem_base);
         for (int i = 0; i < player_1.width; ++i) {
             for (int j = 0; j < player_1.height; ++j) {
-                set_display_data_pixel(parlcd_mem_base, player_1.x + i + x_move, player_1.y + j, 0xf80b);
+                set_display_data_pixel(parlcd_mem_base, player_1.x + i + x_move, player_1.y + j, player_colors[player_1.color]);
             }
         }
         player_1.x += x_move;
@@ -84,7 +97,7 @@ void decrement_players_lives()
     remove_heart();
     control_led_line(get_players_lives());
     reset_player_settings();
-    turn_on_RGB(RED,1);
+    turn_on_RGB(RED, 1);
 }
 
 player get_player_stats() { return player_1; }
@@ -109,7 +122,7 @@ void draw_hearts(void)
 
 void remove_heart(void) { draw_char(220 + player_1.lives * 20, 10, 3, 2, 2, 0xffff, true); }
 
-void add_heart(void) { draw_char(220 + (player_1.lives-1) * 20, 10, 3, 2, 2, 0xf800, true); }
+void add_heart(void) { draw_char(220 + (player_1.lives - 1) * 20, 10, 3, 2, 2, 0xf800, true); }
 
 void draw_difficulity(void)
 {

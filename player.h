@@ -22,6 +22,7 @@ typedef struct {
     int width;
     int lives;
     int score;
+    int color;
 } player;
 
 /*
@@ -87,6 +88,8 @@ player get_player_stats();
 
 void draw_player_score(void);
 void draw_hearts(void);
+void change_player_color(void);
+unsigned short get_player_color(void);
 void draw_difficulity(void);
 void remove_heart(void);
 void add_heart(void);

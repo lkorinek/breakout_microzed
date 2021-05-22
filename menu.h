@@ -23,5 +23,10 @@ void draw_menu_options(void);
 void change_menu_state(int increment);
 void game_over_screen(unsigned char *parlcd_mem_base);
 void forward_selected_option_menu(void);
-void credits_page(unsigned char *parlcd_mem_base);
+void reset_menu(void);
+void reset_change_color(void);
+void draw_menu_credits(unsigned char *parlcd_mem_base);
+void draw_menu_settings(unsigned char *parlcd_mem_base);
+int get_menu_position(char *text);
+void draw_menu_text(int y, char *text, int selected);
 #endif

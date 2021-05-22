@@ -30,7 +30,8 @@ typedef struct {
   bool exit;
   int difficulity;
   int num_players;
-  int controls;
+  bool controls;
+  int mode;
 } game_settings;
 
 #endif
