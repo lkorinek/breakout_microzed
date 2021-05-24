@@ -29,7 +29,6 @@ typedef struct {
   bool menu;
   bool exit;
   int difficulity;
-  int num_players;
   bool controls;
   int mode;
 } game_settings;
