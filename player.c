@@ -3,6 +3,7 @@
 
 #include "mzapo_lcd_control.h"
 
+#include "ball.h"
 #include "mzapo_consts.h"
 #include "mzapo_led_control.h"
 #include "player.h"
@@ -10,7 +11,7 @@
 const int max_colors = 6;
 const unsigned short player_colors[] = {0xf80b, 0xfD00, 0xffe0, 0x7e0, 0x3ff, 0xD017};
 static player player_1 = {
-    .x = LCD_WIDTH / 2 - 50, .y = LCD_HEIGHT - 40, .height = 11, .width = 85, .lives = 4, .score = 0, .color = 0};
+    .x = LCD_WIDTH / 2 - 50, .y = LCD_HEIGHT - 40, .height = 11, .width = 100, .speed = 8, .lives = 4, .score = 0, .color = 0};
 
 void draw_player(unsigned char *parlcd_mem_base)
 {
@@ -142,4 +143,27 @@ void draw_difficulity(void)
         break;
     }
     draw_text(difficulity, 360, 10, 2, 2, 0xffff, true);
+}
+
+void change_player_stats(void)
+{
+    switch (GAME_STATS.difficulity) {
+    case 1:
+        player_1.speed = 8;
+        player_1.width = 100;
+        change_ball_speed(8);
+        break;
+    case 2:
+        player_1.speed = 7;
+        player_1.width = 80;
+        change_ball_speed(9);
+        break;
+    case 3:
+        player_1.speed = 6;
+        player_1.width = 70;
+        change_ball_speed(10);
+        break;
+    default:
+        break;
+    }
 }

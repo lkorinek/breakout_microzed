@@ -17,6 +17,17 @@
 
 extern game_settings GAME_STATS;
 
+typedef struct {
+    int menu_selected;
+    int menu_selected_max;
+    bool run;
+    bool credits;
+    bool settings;
+    int settings_selected;
+    int settings_selected_max;
+    bool change_color;
+} menu_stats;
+
 void draw_menu(unsigned char *parlcd_mem_base, shared_data *data);
 void draw_menu_box(unsigned char *parlcd_mem_base);
 void draw_menu_options(void);

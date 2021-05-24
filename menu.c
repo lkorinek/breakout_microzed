@@ -1,5 +1,6 @@
 #include <pthread.h>
 #include <stdbool.h>
+#include <string.h>
 
 #include "menu.h"
 
@@ -10,24 +11,26 @@
 
 extern pthread_mutex_t mtx;
 
-int menu_selected = 0;
-int menu_selected_max = 4;
-bool run_menu = true;
-bool menu_credits = false;
-bool menu_settings = false;
-int settings_selected = 0;
-int settings_selected_max = 5;
-bool change_color = false;
+menu_stats menu = {
+    .menu_selected = 0,
+    .menu_selected_max = 4,
+    .run = true,
+    .credits = false,
+    .settings = false,
+    .settings_selected = 0,
+    .settings_selected_max = 5,
+    .change_color = false,
+};
 
 void draw_menu(unsigned char *parlcd_mem_base, shared_data *data)
 {
-    run_menu = true;
-    while (GAME_STATS.menu && run_menu) {
+    menu.run = true;
+    while (GAME_STATS.menu && menu.run) {
 
         set_display_data_color(parlcd_mem_base, 0u);
-        if (menu_settings) {
+        if (menu.settings) {
             draw_menu_settings(parlcd_mem_base);
-        } else if (menu_credits) {
+        } else if (menu.credits) {
             draw_menu_credits(parlcd_mem_base);
         } else {
             draw_menu_box(parlcd_mem_base);
@@ -38,7 +41,7 @@ void draw_menu(unsigned char *parlcd_mem_base, shared_data *data)
         draw_display_data(parlcd_mem_base);
 
         pthread_mutex_lock(&mtx);
-        run_menu = data->run && run_menu && !GAME_STATS.exit;
+        menu.run = data->run && menu.run && !GAME_STATS.exit;
         pthread_mutex_unlock(&mtx);
     }
     set_display_data_color(parlcd_mem_base, 0u);
@@ -57,48 +60,43 @@ void draw_menu_box(unsigned char *parlcd_mem_base)
 
 void forward_selected_option_menu(void)
 {
-    if (menu_settings) {
+    if (menu.settings) {
         // number of players, difficulity, controls, demo mode
 
-        switch (settings_selected) {
-        case 0:
+        switch (menu.settings_selected) {
+        case 0: // Controls
             GAME_STATS.controls = !GAME_STATS.controls;
             break;
-        case 1:
+        case 1: // Difficulity
             ++GAME_STATS.difficulity;
             if (GAME_STATS.difficulity > 2) {
                 GAME_STATS.difficulity = 0;
             }
+            change_player_stats();
             break;
-        case 2:
-            ++GAME_STATS.num_players;
-            if (GAME_STATS.num_players > 1) {
-                GAME_STATS.num_players = 0;
-            }
-            break;
-        case 3:
+        case 2: // Mode - Human or Demo
             ++GAME_STATS.mode;
             if (GAME_STATS.mode > 1) {
                 GAME_STATS.mode = 0;
             }
             break;
-        case 4:
-            change_color = !change_color;
+        case 3: // Color of player
+            menu.change_color = !menu.change_color;
             break;
         default:
             break;
         }
     } else {
-        switch (menu_selected) {
+        switch (menu.menu_selected) {
         case 0:
             GAME_STATS.menu = false;
-            run_menu = false;
+            menu.run = false;
             break;
         case 1:
-            menu_settings = true;
+            menu.settings = true;
             break;
         case 2:
-            menu_credits = true;
+            menu.credits = true;
             break;
         case 3:
             GAME_STATS.exit = true;
@@ -115,55 +113,31 @@ void draw_menu_options(void)
     char *texts[] = {"START", "SETTINGS", "CREDITS", "EXIT"};
 
     for (int i = 0; i < texts_num; ++i) {
-        draw_menu_text(LCD_HEIGHT / 8 + 70 + 50 * i, texts[i], menu_selected == i);
+        draw_menu_text(LCD_HEIGHT / 8 + 70 + 50 * i, texts[i], menu.menu_selected == i);
     }
 }
 
 void change_menu_state(int increment)
 {
-    if (change_color) {
+    if (menu.change_color) {
         change_player_color();
-    } else if (menu_settings) {
-        if (settings_selected + increment < settings_selected_max && settings_selected + increment >= 0) {
-            settings_selected += increment;
+    } else if (menu.settings) {
+        if (menu.settings_selected + increment < menu.settings_selected_max && menu.settings_selected + increment >= 0) {
+            menu.settings_selected += increment;
         }
     } else {
-        if (menu_selected + increment < menu_selected_max && menu_selected + increment >= 0) {
-            menu_selected += increment;
+        if (menu.menu_selected + increment < menu.menu_selected_max && menu.menu_selected + increment >= 0) {
+            menu.menu_selected += increment;
         }
     }
 }
 
 void reset_menu(void)
 {
-    menu_credits = false;
-    menu_settings = false;
+    menu.credits = false;
+    menu.settings = false;
     GAME_STATS.menu = true;
 }
-
-// void move_ball(unsigned char *parlcd_mem_base)
-// {
-//     delete_ball(parlcd_mem_base);
-
-//     if (ball_1.x >= LCD_WIDTH - ball_1.width || ball_1.x <= ball_1.width) {
-//         ball_1.increment_x = -ball_1.increment_x;
-//     }
-//     if (ball_1.y <= ball_1.height + TOP_SPACE - 5 || ball_1.y >= LCD_HEIGHT - ball_1.height) {
-//         ball_1.increment_y = -ball_1.increment_y;
-//         if (ball_1.y >= LCD_HEIGHT - ball_1.height) {
-//             decrement_players_lives();
-//             control_led_line(get_players_lives());
-//             reset_ball();
-//         }
-//     }
-
-//     bounce_ball(parlcd_mem_base);
-
-//     ball_1.x += ball_1.increment_x;
-//     ball_1.y += ball_1.increment_y;
-
-//     draw_ball(parlcd_mem_base);
-// }
 
 void game_over_screen(unsigned char *parlcd_mem_base)
 {
@@ -194,42 +168,33 @@ void draw_menu_settings(unsigned char *parlcd_mem_base)
             set_display_data_pixel(parlcd_mem_base, j, i, 0xffff);
         }
     }
-    int scale = 3;
     draw_text("  SETTINGS", LCD_WIDTH / 5 + 24, 10, 3, 1, 0xffff, true);
 
-    int texts_num = 4;
-    char *texts[][3] = {{"PERIPHERY", "KEYBOARD"}, {"EASY", "MEDIUM", "HARD"}, {"ONE PLAYER", "TWO PLAYERS"}, {"HUMAN", "DEMO"}};
+    int texts_num = 3;
+    char *texts[][3] = {{"PERIPHERY", "KEYBOARD"}, {"EASY", "MEDIUM", "HARD"}, {"HUMAN", "DEMO"}};
 
     int secod_idx = 0;
 
     for (int i = 0; i < texts_num; ++i) {
-        if (GAME_STATS.controls && i == 0) {
+        if (!GAME_STATS.controls && i == 0) {
             secod_idx = 1;
         }
         if (i == 1) {
             secod_idx = GAME_STATS.difficulity;
         } else if (i == 2) {
-            secod_idx = GAME_STATS.num_players;
-        } else if (i == 3) {
             secod_idx = GAME_STATS.mode;
         }
-        draw_menu_text(LCD_HEIGHT / 8 + 20 + 50 * i, texts[i][secod_idx], settings_selected == i);
+        draw_menu_text(LCD_HEIGHT / 8 + 20 + 50 * i, texts[i][secod_idx], menu.settings_selected == i);
         secod_idx = 0;
     }
 
-    if (settings_selected == 4) {
-        draw_char(LCD_WIDTH / 2 - 20 - 8 * 5, LCD_HEIGHT / 8 + 204, 27, 5, 2, 0u, false);
-        for (int i = LCD_HEIGHT / 8 + 220; i < LCD_HEIGHT / 8 + 260; ++i) {
-            for (int j = LCD_WIDTH / 2 - 20; j < LCD_WIDTH / 2 + 20; ++j) {
-                set_display_data_pixel(parlcd_mem_base, j, i, get_player_color());
-            }
-        }
-        draw_char(LCD_WIDTH / 2 + 20 + 5, LCD_HEIGHT / 8 + 204, 26, 5, 2, 0u, false);
-    } else {
-        for (int i = LCD_HEIGHT / 8 + 220; i < LCD_HEIGHT / 8 + 260; ++i) {
-            for (int j = LCD_WIDTH / 2 - 20; j < LCD_WIDTH / 2 + 20; ++j) {
-                set_display_data_pixel(parlcd_mem_base, j, i, get_player_color());
-            }
+    if (menu.settings_selected == 3) {
+        draw_char(LCD_WIDTH / 2 - 20 - 8 * 5, LCD_HEIGHT / 8 + 154, 27, 5, 2, 0u, false);
+        draw_char(LCD_WIDTH / 2 + 20 + 5, LCD_HEIGHT / 8 + 154, 26, 5, 2, 0u, false);
+    }
+    for (int i = LCD_HEIGHT / 8 + 170; i < LCD_HEIGHT / 8 + 210; ++i) {
+        for (int j = LCD_WIDTH / 2 - 20; j < LCD_WIDTH / 2 + 20; ++j) {
+            set_display_data_pixel(parlcd_mem_base, j, i, get_player_color());
         }
     }
 }

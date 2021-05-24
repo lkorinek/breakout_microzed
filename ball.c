@@ -95,3 +95,7 @@ void freeze_ball(bool freeze)
         ball_1.increment_y = last_y;
     }
 }
+
+void change_ball_speed(int speed) {
+    ball_1.increment_y = -speed;
+}

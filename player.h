@@ -93,5 +93,6 @@ unsigned short get_player_color(void);
 void draw_difficulity(void);
 void remove_heart(void);
 void add_heart(void);
+void change_player_stats(void);
 
 #endif
