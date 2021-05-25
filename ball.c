@@ -11,7 +11,7 @@
 #include "barrier.h"
 #include "player.h"
 
-const int speed = 8;
+const int speed = 7;
 
 static ball ball_1 = {.x = LCD_WIDTH / 2 - 50, .y = LCD_HEIGHT - 60, .height = 9, .width = 9, .increment_x = speed, .increment_y = -speed};
 
