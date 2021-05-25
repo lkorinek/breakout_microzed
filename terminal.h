@@ -22,4 +22,7 @@ void set_terminal_raw(bool set);
  */
 char get_terminal_input(void);
 
+void control_game(char c);
+void control_menu(char c);
+
 #endif

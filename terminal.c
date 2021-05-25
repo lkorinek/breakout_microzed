@@ -33,43 +33,58 @@ char get_terminal_input(void)
     int r = read(0, &c, 1);
 
     int speed = 8;
-    if (!GAME_STATS.controls && r > 0) {
-        switch (c) {
-        case 'a':
-            set_player_speed(-get_player_max_speed());
-            break;
-        case 'w':
-            if (GAME_STATS.menu) {
-                change_menu_state(-1);
-            }
-            break;
-        case 'd':
-            set_player_speed(get_player_max_speed());
-            break;
-        case 's':
-            if (GAME_STATS.menu) {
-                change_menu_state(1);
-            } else {
-                set_player_speed(0);
-            }
-            break;
-        case 'f':
-            GAME_STATS.freeze = !GAME_STATS.freeze;
-            freeze_ball(GAME_STATS.freeze);
-            break;
-        case ENTER:
-            if (GAME_STATS.menu) {
-                forward_selected_option_menu();
-            }
-            break;
-        case ESC:
-            if (GAME_STATS.menu) {
-                reset_menu();
-            }
-            break;
-        default:
-            break;
+
+    if (r > 0) {
+        if (!GAME_STATS.controls) {
+            control_game(c);
+        }
+        if (GAME_STATS.menu) {
+            control_menu(c);
         }
     }
-    return c;
+}
+
+void control_game(char c)
+{
+    switch (c) {
+    case 'a':
+        set_player_speed(-get_player_max_speed());
+        break;
+        break;
+    case 'd':
+        set_player_speed(get_player_max_speed());
+        break;
+    case 's':
+        set_player_speed(0);
+        break;
+    case 'f':
+        GAME_STATS.freeze = !GAME_STATS.freeze;
+        freeze_ball(GAME_STATS.freeze);
+        break;
+    case ESC:
+        reset_menu();
+        break;
+    default:
+        break;
+    }
+}
+
+void control_menu(char c)
+{
+    switch (c) {
+    case 'w':
+        change_menu_state(-1);
+        break;
+    case 's':
+        change_menu_state(1);
+        break;
+    case ENTER:
+        forward_selected_option_menu();
+        break;
+    case ESC:
+        reset_menu();
+        break;
+    default:
+        break;
+    }
 }
