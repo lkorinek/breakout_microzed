@@ -5,6 +5,7 @@
 #include "menu.h"
 #include "player.h"
 #include "terminal.h"
+#include "ball.h"
 
 #define ENTER 13
 #define ESC 27
@@ -32,8 +33,6 @@ char get_terminal_input(void)
     char c;
     int r = read(0, &c, 1);
 
-    int speed = 8;
-
     if (r > 0) {
         if (!GAME_STATS.controls) {
             control_game(c);
@@ -41,7 +40,11 @@ char get_terminal_input(void)
         if (GAME_STATS.menu) {
             control_menu(c);
         }
+        if (c == ESC) {
+            reset_menu();
+        }
     }
+    return c;
 }
 
 void control_game(char c)
@@ -61,9 +64,6 @@ void control_game(char c)
         GAME_STATS.freeze = !GAME_STATS.freeze;
         freeze_ball(GAME_STATS.freeze);
         break;
-    case ESC:
-        reset_menu();
-        break;
     default:
         break;
     }
@@ -80,9 +80,6 @@ void control_menu(char c)
         break;
     case ENTER:
         forward_selected_option_menu();
-        break;
-    case ESC:
-        reset_menu();
         break;
     default:
         break;

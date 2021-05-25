@@ -14,6 +14,7 @@
 #include "player.h"
 #include "terminal.h"
 #include "threads.h"
+#include "mzapo_led_control.h"
 
 pthread_mutex_t mtx;
 pthread_cond_t convar;
@@ -104,8 +105,6 @@ void *display_thread(void *v)
     draw_top_line(parlcd_mem_base);
     update_barriers(parlcd_mem_base);
     draw_difficulity();
-
-    // Init game
     draw_hearts();
 
     while (run) {
@@ -121,6 +120,13 @@ void *display_thread(void *v)
             turn_on_RGB(BLUE, 1);
             turn_on_RGB(BLUE, 2);
             draw_menu(parlcd_mem_base, data);
+        }
+
+        if (GAME_STATS.reset) {
+            draw_top_line(parlcd_mem_base);
+            update_barriers(parlcd_mem_base);
+            draw_difficulity();
+            draw_hearts();
         }
 
         pthread_mutex_lock(&mtx);

@@ -67,8 +67,8 @@ void forward_selected_option_menu(void)
             break;
         case 1: // Difficulity
             ++GAME_STATS.difficulity;
-            if (GAME_STATS.difficulity > 2) {
-                GAME_STATS.difficulity = 0;
+            if (GAME_STATS.difficulity > 3) {
+                GAME_STATS.difficulity = 1;
             }
             change_player_stats();
             break;
@@ -134,7 +134,11 @@ void reset_menu(void)
 {
     menu.credits = false;
     menu.settings = false;
-    GAME_STATS.menu = true;
+
+    if (!GAME_STATS.menu) {
+        GAME_STATS.reset = true;
+        GAME_STATS.menu = true;
+    }
 }
 
 void game_over_screen(unsigned char *parlcd_mem_base)
@@ -178,7 +182,7 @@ void draw_menu_settings(unsigned char *parlcd_mem_base)
             secod_idx = 1;
         }
         if (i == 1) {
-            secod_idx = GAME_STATS.difficulity-1;
+            secod_idx = GAME_STATS.difficulity - 1;
         } else if (i == 2) {
             secod_idx = GAME_STATS.mode;
         }

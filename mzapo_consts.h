@@ -27,6 +27,7 @@
 
 typedef struct {
   bool menu;
+  bool reset;
   bool exit;
   int difficulity;
   bool controls;
