@@ -178,7 +178,7 @@ void draw_menu_settings(unsigned char *parlcd_mem_base)
             secod_idx = 1;
         }
         if (i == 1) {
-            secod_idx = GAME_STATS.difficulity;
+            secod_idx = GAME_STATS.difficulity-1;
         } else if (i == 2) {
             secod_idx = GAME_STATS.mode;
         }
