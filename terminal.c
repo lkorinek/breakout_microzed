@@ -2,8 +2,12 @@
 #include <termios.h>
 #include <unistd.h>
 
+#include "menu.h"
 #include "player.h"
 #include "terminal.h"
+
+#define ENTER 13
+#define ESC 27
 
 void set_terminal_raw(bool set)
 {
@@ -32,13 +36,36 @@ char get_terminal_input(void)
     if (!GAME_STATS.controls && r > 0) {
         switch (c) {
         case 'a':
-            set_player_speed(-speed);
+            set_player_speed(-get_player_max_speed());
+            break;
+        case 'w':
+            if (GAME_STATS.menu) {
+                change_menu_state(-1);
+            }
             break;
         case 'd':
-            set_player_speed(speed);
+            set_player_speed(get_player_max_speed());
             break;
         case 's':
-            set_player_speed(0);
+            if (GAME_STATS.menu) {
+                change_menu_state(1);
+            } else {
+                set_player_speed(0);
+            }
+            break;
+        case 'f':
+            GAME_STATS.freeze = !GAME_STATS.freeze;
+            freeze_ball(GAME_STATS.freeze);
+            break;
+        case ENTER:
+            if (GAME_STATS.menu) {
+                forward_selected_option_menu();
+            }
+            break;
+        case ESC:
+            if (GAME_STATS.menu) {
+                reset_menu();
+            }
             break;
         default:
             break;

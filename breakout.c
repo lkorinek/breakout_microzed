@@ -32,7 +32,7 @@
 #include "terminal.h"
 #include "threads.h"
 
-game_settings GAME_STATS = {true, false, 1, true, 0, false};
+game_settings GAME_STATS = {true, false, 1, false, 0, false};
 
 int main(int argc, char *argv[])
 {

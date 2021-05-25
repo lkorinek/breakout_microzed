@@ -10,6 +10,8 @@
 #ifndef MZAPO_KNOBS_CONTROL
 #define MZAPO_KNOBS_CONTROL
 
+extern game_settings GAME_STATS;
+
 #define SPILED_REG_KBDRD_KNOBS_DIRECT_o 0x020
 #define SPILED_REG_KNOBS_8BIT_o 0x024
 
