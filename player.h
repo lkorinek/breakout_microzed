@@ -18,6 +18,7 @@ typedef struct {
     int x;
     int y;
     int speed;
+    int max_speed;
     int height;
     int width;
     int lives;
@@ -79,6 +80,8 @@ void increment_players_lives();
 void enlarge_player();
 
 void reset_player_settings();
+
+int get_player_max_speed(void);
 
 /*
  * Return all stats of the player

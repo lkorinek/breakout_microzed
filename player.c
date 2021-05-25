@@ -10,13 +10,20 @@
 
 const int max_colors = 6;
 const unsigned short player_colors[] = {0xf80b, 0xfD00, 0xffe0, 0x7e0, 0x3ff, 0xD017};
-static player player_1 = {
-    .x = LCD_WIDTH / 2 - 50, .y = LCD_HEIGHT - 40, .height = 11, .width = 100, .speed = 8, .lives = 4, .score = 0, .color = 0};
+static player player_1 = {.x = LCD_WIDTH / 2 - 50,
+                          .y = LCD_HEIGHT - 40,
+                          .height = 11,
+                          .width = 100,
+                          .speed = 0,
+                          .max_speed = 8,
+                          .lives = 4,
+                          .score = 0,
+                          .color = 0};
 
 void draw_player(unsigned char *parlcd_mem_base)
 {
     remove_player(parlcd_mem_base);
-    if (player_1.speed != 0) {
+    if (player_1.speed != 0 && !GAME_STATS.freeze) {
         move_player(parlcd_mem_base, player_1.speed);
     }
 
@@ -37,6 +44,8 @@ void remove_player(unsigned char *parlcd_mem_base)
 }
 
 void set_player_speed(int speed) { player_1.speed = speed; }
+
+int get_player_max_speed(void) { return player_1.max_speed; }
 
 void decrement_player_speed()
 {
@@ -149,19 +158,19 @@ void change_player_stats(void)
 {
     switch (GAME_STATS.difficulity) {
     case 1:
-        player_1.speed = 8;
+        player_1.max_speed = 8;
         player_1.width = 100;
-        change_ball_speed(8);
+        change_ball_speed(7);
         break;
     case 2:
-        player_1.speed = 7;
+        player_1.max_speed = 7;
         player_1.width = 80;
-        change_ball_speed(9);
+        change_ball_speed(8);
         break;
     case 3:
-        player_1.speed = 6;
+        player_1.max_speed = 6;
         player_1.width = 70;
-        change_ball_speed(10);
+        change_ball_speed(9);
         break;
     default:
         break;
