@@ -32,7 +32,7 @@
 #include "terminal.h"
 #include "threads.h"
 
-game_settings GAME_STATS = {true, false, 1, true, 0};
+game_settings GAME_STATS = {true, false, 1, true, 0, false};
 
 int main(int argc, char *argv[])
 {
@@ -64,8 +64,8 @@ int main(int argc, char *argv[])
     // Reset terminal settings
     set_terminal_raw(false);
 
-    // turn_off_RGB(1);
-    // turn_off_RGB(2);
+    turn_off_RGB(1);
+    turn_off_RGB(2);
     control_led_line(0);
     printf("\nGoodbye World!\n");
 

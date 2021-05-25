@@ -31,6 +31,7 @@ typedef struct {
   int difficulity;
   bool controls;
   int mode;
+  bool freeze;
 } game_settings;
 
 #endif
