@@ -118,6 +118,8 @@ void *display_thread(void *v)
         draw_display_data(parlcd_mem_base);
 
         if (GAME_STATS.menu) { // move to mennu
+            turn_on_RGB(BLUE, 1);
+            turn_on_RGB(BLUE, 2);
             draw_menu(parlcd_mem_base, data);
         }
 

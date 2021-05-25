@@ -39,5 +39,5 @@ void reset_change_color(void);
 void draw_menu_credits(unsigned char *parlcd_mem_base);
 void draw_menu_settings(unsigned char *parlcd_mem_base);
 int get_menu_position(char *text);
-void draw_menu_text(int y, char *text, int selected);
+void draw_menu_text(int y, char *text, bool selected);
 #endif

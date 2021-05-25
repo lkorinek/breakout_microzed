@@ -61,8 +61,6 @@ void draw_menu_box(unsigned char *parlcd_mem_base)
 void forward_selected_option_menu(void)
 {
     if (menu.settings) {
-        // number of players, difficulity, controls, demo mode
-
         switch (menu.settings_selected) {
         case 0: // Controls
             GAME_STATS.controls = !GAME_STATS.controls;
@@ -188,6 +186,7 @@ void draw_menu_settings(unsigned char *parlcd_mem_base)
         secod_idx = 0;
     }
 
+    // Pick a player color
     if (menu.settings_selected == 3) {
         draw_char(LCD_WIDTH / 2 - 20 - 8 * 5, LCD_HEIGHT / 8 + 154, 27, 5, 2, 0u, false);
         draw_char(LCD_WIDTH / 2 + 20 + 5, LCD_HEIGHT / 8 + 154, 26, 5, 2, 0u, false);
@@ -199,7 +198,7 @@ void draw_menu_settings(unsigned char *parlcd_mem_base)
     }
 }
 
-void draw_menu_text(int y, char *text, int selected)
+void draw_menu_text(int y, char *text, bool selected)
 {
     int scale = 3;
     int x = get_menu_position(text);
