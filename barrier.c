@@ -10,6 +10,7 @@
 #include "mzapo_consts.h"
 #include "mzapo_led_control.h"
 
+#include "ball.h"
 #include "barrier.h"
 #include "player.h"
 
@@ -41,6 +42,7 @@ void init_barriers()
 
 void update_barriers(unsigned char *parlcd_mem_base)
 {
+    bool barriers_present = false;
     int color_number = 0;
     for (int b = 0; b < NUMBER_OF_BARRIERS_IN_ROW * NUMBER_OF_ROWS; ++b) {
         if (b != 0 && b % NUMBER_OF_BARRIERS_IN_ROW == 0) {
@@ -50,11 +52,21 @@ void update_barriers(unsigned char *parlcd_mem_base)
             for (int j = 0; j < our_barriers[b].height; ++j) {
                 if (!our_barriers[b].destroyed) {
                     set_display_data_pixel(parlcd_mem_base, our_barriers[b].x + i, our_barriers[b].y + j, colors[color_number]);
+                    barriers_present = true;
                 } else {
                     set_display_data_pixel(parlcd_mem_base, our_barriers[b].x + i, our_barriers[b].y + j, 0u);
                 }
             }
         }
+    }
+    if (!barriers_present) { // end game, move to menu and reset game
+        reset_upgrade();
+        init_barriers();
+        reset_player();
+        reset_ball();
+        change_ball_y_speed();
+        GAME_STATS.menu = true;
+        GAME_STATS.reset = true;
     }
 }
 
@@ -81,7 +93,7 @@ void move_upgrade(unsigned char *parlcd_mem_base)
         if (current_upgrade.y >= (LCD_HEIGHT - 16 * 2)) {
             draw_char(current_upgrade.x, current_upgrade.y, current_upgrade.type_upgrade, 2, 2, 0u, false);
             reset_upgrade();
-        } else {
+        } else if (!GAME_STATS.freeze) {
             draw_char(current_upgrade.x, current_upgrade.y, current_upgrade.type_upgrade, 2, 2, 0u, false);
             current_upgrade.y += current_upgrade.speed;
             draw_char(current_upgrade.x, current_upgrade.y, current_upgrade.type_upgrade, 2, 2, color, false);
@@ -90,15 +102,15 @@ void move_upgrade(unsigned char *parlcd_mem_base)
                 switch (current_upgrade.type_upgrade) {
                 case 3:
                     increment_players_lives();
-                    turn_on_RGB(RED,2);
+                    turn_on_RGB(RED, 2);
                     break;
                 case 36:
                     increment_players_score(50);
-                    turn_on_RGB(YELLOW,2);
+                    turn_on_RGB(YELLOW, 2);
                     break;
                 case 18:
                     enlarge_player();
-                    turn_on_RGB(BLUE,2);
+                    turn_on_RGB(BLUE, 2);
                     break;
                 default:
                     break;
@@ -135,7 +147,7 @@ bool bounce_from_barriers(int x, int y, int ball_w, int ball_h, unsigned char *p
         if ((x + ball_w) > (our_barriers[i].x) && (our_barriers[i].x + our_barriers[i].width) > x && (y + ball_h) > our_barriers[i].y &&
             (our_barriers[i].y + our_barriers[i].height) > y && !our_barriers[i].destroyed) {
             ret = true;
-            turn_on_RGB(GREEN,1);
+            turn_on_RGB(GREEN, 1);
             our_barriers[i].destroyed = true;
             upgrade = rand() % 200;
             if (upgrade < 10 && !current_upgrade.falling_upgrade) { // Hearts
