@@ -107,3 +107,5 @@ void draw_top_line(unsigned char *parlcd_mem_base)
         }
     }
 }
+
+void free_display_data(void) { free(display_data); }
