@@ -9,12 +9,12 @@
 #include "menu.h"
 #include "mzapo_knobs_control.h"
 #include "mzapo_lcd_control.h"
+#include "mzapo_led_control.h"
 #include "mzapo_phys.h"
 #include "mzapo_regs.h"
 #include "player.h"
 #include "terminal.h"
 #include "threads.h"
-#include "mzapo_led_control.h"
 
 pthread_mutex_t mtx;
 pthread_cond_t convar;
@@ -66,11 +66,10 @@ void *output_thread(void *v)
         fflush(stdout);
 
         if (get_players_lives() == 0) {
-            // TODO: add some function game_over, which will print on screen GAME OVER
-            fprintf(stderr, "\r\nGAME OVER!");
-            pthread_mutex_lock(&mtx);
-            data->run = false;
-            pthread_mutex_unlock(&mtx);
+            init_barriers();
+            reset_player();
+            GAME_STATS.menu = true;
+            GAME_STATS.reset = true;
         }
 
         pthread_mutex_lock(&mtx);
@@ -111,12 +110,13 @@ void *display_thread(void *v)
         move_upgrade(parlcd_mem_base);
         move_ball(parlcd_mem_base);
         draw_player(parlcd_mem_base);
+        update_barriers(parlcd_mem_base);
         draw_player_score();
 
         // Draw new data onto display
         draw_display_data(parlcd_mem_base);
 
-        if (GAME_STATS.menu) { // move to mennu
+        if (GAME_STATS.menu) { // move to menu
             turn_on_RGB(BLUE, 1);
             turn_on_RGB(BLUE, 2);
             draw_menu(parlcd_mem_base, data);
@@ -124,9 +124,9 @@ void *display_thread(void *v)
 
         if (GAME_STATS.reset) {
             draw_top_line(parlcd_mem_base);
-            update_barriers(parlcd_mem_base);
             draw_difficulity();
             draw_hearts();
+            GAME_STATS.reset = false;
         }
 
         pthread_mutex_lock(&mtx);
@@ -140,10 +140,11 @@ void *display_thread(void *v)
 
     // Make screen black at the end
     draw_black_screen(parlcd_mem_base);
+    free_display_data();
     return 0;
 }
 
-void *compute_thread(void *v)
+void *periphery_thread(void *v)
 {
     shared_data *data = (shared_data *)v;
     bool run = true;

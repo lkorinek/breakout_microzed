@@ -37,6 +37,6 @@ void *display_thread(void *v);
 /*
 Compute thread to compute more demanding computations.
  */
-void *compute_thread(void *v);
+void *periphery_thread(void *v);
 
 #endif

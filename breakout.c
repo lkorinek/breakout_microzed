@@ -38,7 +38,7 @@ game_settings GAME_STATS = {
   .exit = false,
   .difficulity = 1,
   .controls = false,
-  .mode = 0,
+  .demo_mode = false,
   .freeze = false,
 };
 
@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
     pthread_create(&thrs[0], NULL, input_thread, &data);
     pthread_create(&thrs[1], NULL, output_thread, &data);
     pthread_create(&thrs[2], NULL, display_thread, &data);
-    pthread_create(&thrs[3], NULL, compute_thread, &data);
+    pthread_create(&thrs[3], NULL, periphery_thread, &data);
 
     for (int i = 0; i < THREAD_COUNT; ++i) {
         pthread_join(thrs[i], NULL);

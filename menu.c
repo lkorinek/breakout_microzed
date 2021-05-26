@@ -18,7 +18,7 @@ menu_stats menu = {
     .credits = false,
     .settings = false,
     .settings_selected = 0,
-    .settings_selected_max = 5,
+    .settings_selected_max = 4,
     .change_color = false,
 };
 
@@ -73,10 +73,7 @@ void forward_selected_option_menu(void)
             change_player_stats();
             break;
         case 2: // Mode - Human or Demo
-            ++GAME_STATS.mode;
-            if (GAME_STATS.mode > 1) {
-                GAME_STATS.mode = 0;
-            }
+            GAME_STATS.demo_mode = !GAME_STATS.demo_mode;
             break;
         case 3: // Color of player
             menu.change_color = !menu.change_color;
@@ -118,7 +115,7 @@ void draw_menu_options(void)
 void change_menu_state(int increment)
 {
     if (menu.change_color) {
-        change_player_color();
+        change_player_color(increment);
     } else if (menu.settings) {
         if (menu.settings_selected + increment < menu.settings_selected_max && menu.settings_selected + increment >= 0) {
             menu.settings_selected += increment;
@@ -183,8 +180,8 @@ void draw_menu_settings(unsigned char *parlcd_mem_base)
         }
         if (i == 1) {
             secod_idx = GAME_STATS.difficulity - 1;
-        } else if (i == 2) {
-            secod_idx = GAME_STATS.mode;
+        } else if (i == 2 && GAME_STATS.demo_mode) {
+            secod_idx = 1;
         }
         draw_menu_text(LCD_HEIGHT / 8 + 20 + 50 * i, texts[i][secod_idx], menu.settings_selected == i);
         secod_idx = 0;

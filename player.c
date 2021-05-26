@@ -10,10 +10,11 @@
 
 const int max_colors = 6;
 const unsigned short player_colors[] = {0xf80b, 0xfD00, 0xffe0, 0x7e0, 0x3ff, 0xD017};
-static player player_1 = {.x = LCD_WIDTH / 2 - 50,
-                          .y = LCD_HEIGHT - 40,
+static player player_1 = {.x = LCD_WIDTH / 2,
+                          .y = LCD_HEIGHT - 30,
                           .height = 11,
                           .width = 100,
+                          .max_width = 100,
                           .speed = 0,
                           .max_speed = 8,
                           .lives = 4,
@@ -56,11 +57,13 @@ void decrement_player_speed()
     }
 }
 
-void change_player_color(void)
+void change_player_color(int increment)
 {
-    player_1.color += 1;
-    if (player_1.color == max_colors) {
+    player_1.color += increment;
+    if (player_1.color > max_colors - 1) {
         player_1.color = 0;
+    } else if (player_1.color < 0) {
+        player_1.color = max_colors - 1;
     }
 }
 
@@ -68,6 +71,7 @@ unsigned short get_player_color(void) { return player_colors[player_1.color]; }
 
 void move_player(unsigned char *parlcd_mem_base, int x_move)
 {
+
     bool move = true;
     if (player_1.x + player_1.width > LCD_WIDTH && x_move > 0) {
         move = false;
@@ -77,15 +81,32 @@ void move_player(unsigned char *parlcd_mem_base, int x_move)
 
     if (move) {
         remove_player(parlcd_mem_base);
+        int new_x_pos = player_1.x + x_move;
         for (int i = 0; i < player_1.width; ++i) {
             for (int j = 0; j < player_1.height; ++j) {
-                set_display_data_pixel(parlcd_mem_base, player_1.x + i + x_move, player_1.y + j, player_colors[player_1.color]);
+                set_display_data_pixel(parlcd_mem_base, new_x_pos + i, player_1.y + j, player_colors[player_1.color]);
             }
         }
+
         player_1.x += x_move;
     }
 }
 
+void demo_mode(unsigned char *parlcd_mem_base)
+{
+    remove_player(parlcd_mem_base);
+    if (GAME_STATS.demo_mode) {
+        int new_x_pos = get_ball_x_position() - player_1.width / 2;
+        if (new_x_pos + player_1.width < LCD_WIDTH && new_x_pos > 0) {
+            player_1.x = new_x_pos;
+        }
+    }
+    for (int i = 0; i < player_1.width; ++i) {
+        for (int j = 0; j < player_1.height; ++j) {
+            set_display_data_pixel(parlcd_mem_base, player_1.x + i, player_1.y + j, player_colors[player_1.color]);
+        }
+    }
+}
 int get_players_lives() { return player_1.lives; }
 
 void increment_players_lives()
@@ -99,6 +120,15 @@ void increment_players_lives()
 
 void increment_players_score(int increment) { player_1.score += increment; }
 
+void reset_player(void)
+{
+    reset_player_width();
+    player_1.x = LCD_WIDTH / 2;
+    player_1.y = LCD_HEIGHT - 50;
+    player_1.score = 0;
+    player_1.lives = 4;
+}
+
 int get_players_score() { return player_1.score; }
 
 void decrement_players_lives()
@@ -106,7 +136,7 @@ void decrement_players_lives()
     player_1.lives--;
     remove_heart();
     control_led_line(get_players_lives());
-    reset_player_settings();
+    reset_player_width();
     turn_on_RGB(RED, 1);
 }
 
@@ -114,7 +144,7 @@ player get_player_stats() { return player_1; }
 
 void enlarge_player() { player_1.width += 20; }
 
-void reset_player_settings() { player_1.width = 100; }
+void reset_player_width() { player_1.width = player_1.max_width; }
 
 void draw_player_score(void)
 {
@@ -160,16 +190,19 @@ void change_player_stats(void)
     case 1:
         player_1.max_speed = 8;
         player_1.width = 100;
+        player_1.max_width = 100;
         change_ball_speed(7);
         break;
     case 2:
         player_1.max_speed = 7;
         player_1.width = 80;
+        player_1.max_width = 80;
         change_ball_speed(8);
         break;
     case 3:
         player_1.max_speed = 6;
         player_1.width = 70;
+        player_1.max_width = 70;
         change_ball_speed(9);
         break;
     default:

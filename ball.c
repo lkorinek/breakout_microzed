@@ -12,6 +12,8 @@
 #include "player.h"
 
 const int speed = 7;
+int last_x = 0;
+int last_y = 0;
 
 static ball ball_1 = {.x = LCD_WIDTH / 2 - 50, .y = LCD_HEIGHT - 60, .height = 9, .width = 9, .increment_x = speed, .increment_y = -speed};
 
@@ -21,6 +23,8 @@ void reset_ball()
     ball_1.y = LCD_HEIGHT - 60;
     ball_1.increment_x = speed;
     ball_1.increment_y = -speed;
+    last_x = 0;
+    last_y = 0;
 }
 
 void move_ball(unsigned char *parlcd_mem_base)
@@ -43,6 +47,7 @@ void move_ball(unsigned char *parlcd_mem_base)
     ball_1.x += ball_1.increment_x;
     ball_1.y += ball_1.increment_y;
 
+    demo_mode(parlcd_mem_base);
     draw_ball(parlcd_mem_base);
 }
 
@@ -63,6 +68,10 @@ void bounce_ball(unsigned char *parlcd_mem_base)
     }
 }
 
+void change_ball_y_speed(void) { ball_1.increment_y = -ball_1.increment_y; }
+
+int get_ball_x_position(void) { return ball_1.x; }
+
 void draw_ball(unsigned char *parlcd_mem_base)
 {
     for (int i = 0; i < ball_1.width; ++i) {
@@ -81,8 +90,6 @@ void delete_ball(unsigned char *parlcd_mem_base)
     }
 }
 
-int last_x = 0;
-int last_y = 0;
 void freeze_ball(bool freeze)
 {
     if (freeze) {
@@ -96,6 +103,4 @@ void freeze_ball(bool freeze)
     }
 }
 
-void change_ball_speed(int speed) {
-    ball_1.increment_y = -speed;
-}
+void change_ball_speed(int speed) { ball_1.increment_y = -speed; }

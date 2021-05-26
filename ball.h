@@ -53,5 +53,7 @@ void reset_ball();
 
 void freeze_ball(bool freeze);
 void change_ball_speed(int speed);
+void change_ball_y_speed(void);
+int get_ball_x_position(void);
 
 #endif
