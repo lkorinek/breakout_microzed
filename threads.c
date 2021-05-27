@@ -36,9 +36,15 @@ void *input_thread(void *v)
 
     while (run) {
         char c = get_terminal_input();
-        if (c == 'q') {
+
+        if (c > 'A' && c < 'z') {
             pthread_mutex_lock(&mtx);
             data->last_char = c;
+            pthread_mutex_unlock(&mtx);
+        }
+
+        if (c == 'q') {
+            pthread_mutex_lock(&mtx);
             data->run = false;
             pthread_mutex_unlock(&mtx);
         }
@@ -61,7 +67,7 @@ void *output_thread(void *v)
         char c = data->last_char;
         pthread_mutex_unlock(&mtx);
 
-        printf("\rPressed button: %c Lives: %d SCORE: %d", c, get_players_lives(), get_players_score());
+        printf("\rPressed button: %c Lives: %d Score: %d", c, get_players_lives(), get_players_score());
         fflush(stdout);
 
         if (get_players_lives() == 0) {
