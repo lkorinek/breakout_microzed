@@ -25,6 +25,7 @@
 // Space for score on top of the screen
 #define TOP_SPACE 60
 
+// Global game variables to inform about the state of the game
 typedef struct {
   bool menu;
   bool reset;

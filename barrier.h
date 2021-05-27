@@ -1,5 +1,5 @@
 /**
-  player.h      - functions to create and interact with players
+  barrier.h      - functions to create and destory barriers
 
   (C) Copyright 2021 by Lukáš Kořínek and Radek Chládek
       e-mail:   korinlu1@fel.cvut.cz chladrad@fel.cvut.cz
@@ -31,7 +31,7 @@ typedef struct {
 /*
  * Initializes barriers for the game
  */
-void init_barriers();
+void init_barriers(void);
 
 /*
  * selects the color and char for the update and lets it fall
@@ -42,7 +42,7 @@ void move_upgrade(unsigned char *parlcd_mem_base);
 /*
  * resets the informations about upgrade
  */
-void reset_upgrade();
+void reset_upgrade(void);
 
 /*
  * Initializes informations about upgrades

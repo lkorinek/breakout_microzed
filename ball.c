@@ -17,7 +17,7 @@ int last_y = 0;
 
 static ball ball_1 = {.x = LCD_WIDTH / 2 - 50, .y = LCD_HEIGHT - 60, .height = 9, .width = 9, .increment_x = speed, .increment_y = -speed};
 
-void reset_ball()
+void reset_ball(void)
 {
     ball_1.x = LCD_WIDTH / 2;
     ball_1.y = LCD_HEIGHT - 60;

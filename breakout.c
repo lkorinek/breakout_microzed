@@ -32,7 +32,7 @@
 #include "terminal.h"
 #include "threads.h"
 
-// global informations about state of the game
+// global information about state of the game
 game_settings GAME_STATS = {
     .menu = true,
     .reset = false,
@@ -45,12 +45,12 @@ game_settings GAME_STATS = {
 
 int main(int argc, char *argv[])
 {
-    // Setup terminal
+    // Setup terminal.
     set_terminal_raw(true);
 
-    printf("Hello World!\n");
+    printf("Breakout started!\n");
 
-    //at the beggining turn on leds
+    // Turn LEDs on at the start.
     control_led_line(4);
     turn_on_RGB(BLUE, 1);
     turn_on_RGB(BLUE, 2);
@@ -61,24 +61,26 @@ int main(int argc, char *argv[])
     pthread_mutex_init(&mtx, NULL);
     pthread_cond_init(&convar, NULL);
 
+    // Create threads.
     pthread_t thrs[THREAD_COUNT];
     pthread_create(&thrs[0], NULL, input_thread, &data);
     pthread_create(&thrs[1], NULL, output_thread, &data);
     pthread_create(&thrs[2], NULL, display_thread, &data);
     pthread_create(&thrs[3], NULL, periphery_thread, &data);
 
+    // Join threads.
     for (int i = 0; i < THREAD_COUNT; ++i) {
         pthread_join(thrs[i], NULL);
     }
 
-    // Reset terminal settings
+    // Reset terminal settings.
     set_terminal_raw(false);
 
-    //at the end turn of the leds
+    // Turn LEDs off the end.
     turn_off_RGB(1);
     turn_off_RGB(2);
     control_led_line(0);
-    printf("\nGoodbye World!\n");
+    printf("\nGoodbye!\n");
 
     return 0;
 }

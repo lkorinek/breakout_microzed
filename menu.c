@@ -83,17 +83,17 @@ void forward_selected_option_menu(void)
         }
     } else {
         switch (menu.menu_selected) {
-        case 0:
+        case 0: // START
             GAME_STATS.menu = false;
             menu.run = false;
             break;
-        case 1:
+        case 1: // Settings
             menu.settings = true;
             break;
-        case 2:
+        case 2: // Credits
             menu.credits = true;
             break;
-        case 3:
+        case 3: // Exit
             GAME_STATS.exit = true;
             break;
         default:

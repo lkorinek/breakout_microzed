@@ -122,7 +122,7 @@ void move_upgrade(unsigned char *parlcd_mem_base)
     }
 }
 
-void reset_upgrade()
+void reset_upgrade(void)
 {
     current_upgrade.falling_upgrade = false;
     current_upgrade.type_upgrade = 0;

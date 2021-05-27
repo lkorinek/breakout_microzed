@@ -1,5 +1,5 @@
 /**
-  player.h      - functions to create and interact with players
+  ball.h      - functions to create and move with ball
 
   (C) Copyright 2021 by Lukáš Kořínek and Radek Chládek
       e-mail:   korinlu1@fel.cvut.cz chladrad@fel.cvut.cz
@@ -49,7 +49,7 @@ void delete_ball(unsigned char *parlcd_mem_base);
 /*
  * resets ball to start position
  */
-void reset_ball();
+void reset_ball(void);
 
 /*
  * freezes/unfreezes ball

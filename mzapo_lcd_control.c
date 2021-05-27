@@ -73,7 +73,6 @@ void draw_char(int x, int y, char ch, int scale, int font, unsigned short color,
 
 void draw_text(char *str, int x, int y, int scale, int font, unsigned short color, bool background)
 {
-
     int length = strlen(str);
     char *curr_point = str;
     for (int i = 0; i < length; ++i) {

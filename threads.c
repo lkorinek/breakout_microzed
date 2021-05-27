@@ -61,7 +61,6 @@ void *output_thread(void *v)
         char c = data->last_char;
         pthread_mutex_unlock(&mtx);
 
-        // TODO: send message
         printf("\rPressed button: %c Lives: %d SCORE: %d", c, get_players_lives(), get_players_score());
         fflush(stdout);
 
@@ -77,7 +76,6 @@ void *output_thread(void *v)
         pthread_mutex_unlock(&mtx);
     }
 
-    // Make screen black at the end
     return 0;
 }
 
@@ -148,10 +146,14 @@ void *periphery_thread(void *v)
 {
     shared_data *data = (shared_data *)v;
     bool run = true;
+
     init_red_knobs(data->parlcd_mem_base);
+
+    // Wait until everything is initialised.
     pthread_mutex_lock(&mtx);
     pthread_cond_wait(&convar, &mtx);
     pthread_mutex_unlock(&mtx);
+
     while (run) {
         struct timespec loop_delay = {.tv_sec = 0, .tv_nsec = 5 * 1000 * 1000};
         control_red_knob(data->spiled_mem_base, data->parlcd_mem_base);

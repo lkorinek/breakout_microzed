@@ -48,7 +48,7 @@ void set_player_speed(int speed) { player_1.speed = speed; }
 
 int get_player_max_speed(void) { return player_1.max_speed; }
 
-void decrement_player_speed()
+void decrement_player_speed(void)
 {
     if (player_1.speed > 0) {
         player_1.speed -= 1;
@@ -107,9 +107,9 @@ void demo_mode(unsigned char *parlcd_mem_base)
         }
     }
 }
-int get_players_lives() { return player_1.lives; }
+int get_players_lives(void) { return player_1.lives; }
 
-void increment_players_lives()
+void increment_players_lives(void)
 {
     if (player_1.lives < 4) {
         player_1.lives++;
@@ -129,9 +129,9 @@ void reset_player(void)
     player_1.lives = 4;
 }
 
-int get_players_score() { return player_1.score; }
+int get_players_score(void) { return player_1.score; }
 
-void decrement_players_lives()
+void decrement_players_lives(void)
 {
     player_1.lives--;
     remove_heart();
@@ -140,11 +140,11 @@ void decrement_players_lives()
     turn_on_RGB(RED, 1);
 }
 
-player get_player_stats() { return player_1; }
+player get_player_stats(void) { return player_1; }
 
-void enlarge_player() { player_1.width += 20; }
+void enlarge_player(void) { player_1.width += 20; }
 
-void reset_player_width() { player_1.width = player_1.max_width; }
+void reset_player_width(void) { player_1.width = player_1.max_width; }
 
 void draw_player_score(void)
 {
