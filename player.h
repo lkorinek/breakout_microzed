@@ -149,4 +149,9 @@ void reset_player_width(void);
  */
 void reset_player(void);
 
+/*
+ * Demo mode, where player is controlled by computer.
+ */
+void demo_mode(unsigned char *parlcd_mem_base);
+
 #endif
