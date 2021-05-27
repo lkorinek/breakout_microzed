@@ -5,12 +5,10 @@ CPPFLAGS = -I .
 CFLAGS =-g -std=gnu99 -O1 -Wall -D_DEFAULT_SOURCE
 CXXFLAGS = -g -std=gnu++11 -O1 -Wall
 LDFLAGS = -lrt -pthread
-#LDLIBS = -lm
 
 SOURCES = $(wildcard *.c)
-#SOURCES += font_prop14x16.c font_rom8x16.c
 TARGET_EXE = breakout
-TARGET_IP ?= 192.168.202.168
+TARGET_IP ?= 192.168.202.xxx
 ifeq ($(TARGET_IP),)
 ifneq ($(filter debug run,$(MAKECMDGOALS)),)
 $(warning The target IP address is not set)
@@ -19,13 +17,12 @@ endif
 endif
 TARGET_DIR ?= /tmp/$(shell whoami)
 TARGET_USER ?= root
-#SSH_OPTIONS = -i ~/.ssh/mzapo-root-key
-
+# SSH_OPTIONS=-i ~/.ssh/mzapo-root-key
 # for use from Eduroam network use TARGET_IP=localhost and enable next line
 #SSH_OPTIONS=-o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -o "Port=2222"
 #SSH_GDB_TUNNEL_REQUIRED=y
 #SSH_OPTIONS=-i /opt/zynq/ssh-connect/mzapo-root-key
-SSH_OPTIONS=-i ~/.ssh/mzapo-root-key -o 'ProxyJump=chladrad@postel.felk.cvut.cz'
+# SSH_OPTIONS=-i ~/.ssh/mzapo-root-key -o 'ProxyJump=cvut_fel@postel.felk.cvut.cz'
 
 OBJECTS += $(filter %.o,$(SOURCES:%.c=%.o))
 OBJECTS += $(filter %.o,$(SOURCES:%.cpp=%.o))
