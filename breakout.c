@@ -32,14 +32,15 @@
 #include "terminal.h"
 #include "threads.h"
 
+// global informations about state of the game
 game_settings GAME_STATS = {
-  .menu = true,
-  .reset = false,
-  .exit = false,
-  .difficulity = 1,
-  .controls = false,
-  .demo_mode = false,
-  .freeze = false,
+    .menu = true,
+    .reset = false,
+    .exit = false,
+    .difficulity = 1,
+    .controls = false,
+    .demo_mode = false,
+    .freeze = false,
 };
 
 int main(int argc, char *argv[])
@@ -49,9 +50,10 @@ int main(int argc, char *argv[])
 
     printf("Hello World!\n");
 
+    //at the beggining turn on leds
     control_led_line(4);
-    turn_on_RGB(BLUE,1);
-    turn_on_RGB(BLUE,2);
+    turn_on_RGB(BLUE, 1);
+    turn_on_RGB(BLUE, 2);
 
     shared_data data = init_shared_data();
     extern pthread_mutex_t mtx;
@@ -72,6 +74,7 @@ int main(int argc, char *argv[])
     // Reset terminal settings
     set_terminal_raw(false);
 
+    //at the end turn of the leds
     turn_off_RGB(1);
     turn_off_RGB(2);
     control_led_line(0);

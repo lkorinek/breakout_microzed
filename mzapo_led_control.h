@@ -12,20 +12,20 @@
 
 #define SPILED_MEM_BASE map_phys_address(SPILED_REG_BASE_PHYS, SPILED_REG_SIZE, 0)
 /*
- * turn on RGB diod
+ * turns on RGB diod
  * color: which color will turn on
  * RGB: which RGB should turn on (there are to -> 1 or 2)
  */
 void turn_on_RGB(volatile uint32_t color, int RGB);
 
 /*
- * turn off RGB diod
+ * turns off RGB diod
  * RGB: which RGB should turn off
  */
 void turn_off_RGB(int RGB);
 
 /*
- * turn on/off number of lifes on the led line
+ * turns on/off number of lifes on the led line
  * lifes: number of lifes you have (1-4)
  * return : true on succes false on error (mainly caused by incorrect input)
  */

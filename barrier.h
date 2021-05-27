@@ -10,6 +10,7 @@
 #ifndef BARRIER
 #define BARRIER
 
+// informations about our barriers
 typedef struct {
     int x;
     int y;
@@ -18,12 +19,13 @@ typedef struct {
     bool destroyed;
 } barrier;
 
+// informations about our upgrades
 typedef struct {
     int x;
     int y;
     int type_upgrade;
     int speed;
-    bool falling_upgrade;
+    bool falling_upgrade; // if some upgrade is already falling
 } upgrade;
 
 /*
@@ -31,23 +33,32 @@ typedef struct {
  */
 void init_barriers();
 
-void release_of_upgrade(int upgrade, int x, int y);
-
+/*
+ * selects the color and char for the update and lets it fall
+ * upgrade falls only if another update is not falling
+ */
 void move_upgrade(unsigned char *parlcd_mem_base);
 
+/*
+ * resets the informations about upgrade
+ */
 void reset_upgrade();
 
+/*
+ * Initializes informations about upgrades
+ */
 void initialize_upgrade(int idx);
 
 /*
- * Remove old destroyed barriers and draw them
+ * Remove old destroyed barriers
  */
 void update_barriers(unsigned char *parlcd_mem_base);
 
 /*
- * Indicates if the ball should bounce and adds score to the player
+ * Indicates if the ball should bounce and add score to the player
+ * input: x,y = position of the ball, ball_w,ball_h = size of ball
  * return: true on bounce, false otherwise
  */
-bool bounce_from_barriers(int x, int y, int ball_w , int ball_h,unsigned char *parlcd_mem_base);
+bool bounce_from_barriers(int x, int y, int ball_w, int ball_h, unsigned char *parlcd_mem_base);
 
 #endif

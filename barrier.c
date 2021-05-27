@@ -149,6 +149,7 @@ bool bounce_from_barriers(int x, int y, int ball_w, int ball_h, unsigned char *p
             ret = true;
             turn_on_RGB(GREEN, 1);
             our_barriers[i].destroyed = true;
+            //random selection of upgrade
             upgrade = rand() % 200;
             if (upgrade < 10 && !current_upgrade.falling_upgrade) { // Hearts
                 initialize_upgrade(i);

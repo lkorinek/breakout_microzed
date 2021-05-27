@@ -51,9 +51,26 @@ void delete_ball(unsigned char *parlcd_mem_base);
  */
 void reset_ball();
 
+/*
+ * freezes/unfreezes ball
+ * input: freeze: if the ball should move or not
+ */
 void freeze_ball(bool freeze);
+
+/*
+ * changes the speed in y-axe
+ * input: speed: the increment ball should have in y-axe
+ */
 void change_ball_speed(int speed);
+
+/*
+ * changes the balls direction in y-axe 
+ */
 void change_ball_y_speed(void);
+
+/*
+ * returns the x position of the ball
+ */
 int get_ball_x_position(void);
 
 #endif

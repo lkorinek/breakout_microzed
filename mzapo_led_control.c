@@ -45,6 +45,7 @@ bool control_led_line(int lifes)
     // number of lifes which is supposed to be turn on
     volatile uint32_t number = 0x00000000;
 
+    //how many leds should light up
     switch (lifes) {
     case 0:
         number = 0x00000000;
