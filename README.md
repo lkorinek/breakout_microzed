@@ -7,6 +7,10 @@ Program Version 2.0 29/04/2021
 Classical retro game atari breakout implemented on the MicroZed APO. This project is realized as a semestral project for the course "Computer Architecture".
 May it get as many points as possible and possibly some joy for others :-).
 
+## Example image
+
+![First image](game.jpg?raw=true)
+
 ### Contact info
 
 Chládek Radek : chladrad@fel.cvut.cz
